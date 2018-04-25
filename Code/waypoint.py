@@ -1,21 +1,34 @@
-"""Waypoint.py"""
-class Waypoint():
-    """
-    A Waypoint is a known point within a given Route.
+"""
+Waypoint
+"""
 
-    Attributes:
-        latitude: a double of range -90.0 (i.e. South) to +90.0 (i.e. North)
-        longitude: a double of range -180.0 (i.e. West) to +180.0 (i.e. East)
-        altitude: a double of boundless range of height against sea level
+# Author: Callum France
+
+class Waypoint():
+    """A known point within a given Route.
+
+    Attributes
+    ----------
+        latitude : double
+            range -90.0 (i.e. South) to +90.0 (i.e. North)
+
+        longitude : double
+            range -180.0 (i.e. West) to +180.0 (i.e. East)
+
+        altitude : double
+            boundless range of height against sea level
     """
+
 
     def __init__(self, in_latitude, in_longitude, in_altitude):
         self.latitude = in_latitude
         self.longitude = in_longitude
         self.altitude = in_altitude
 
+
     @property
     def latitude(self):
+        """latitude property"""
         return self.latitude
 
     @latitude.setter
@@ -30,6 +43,7 @@ class Waypoint():
 
     @property
     def longitude(self):
+        """longitude property"""
         return self.longitude
 
     @longitude.setter
@@ -44,4 +58,5 @@ class Waypoint():
 
     @property
     def altitude(self):
+        """altitude property"""
         return self.altitude
