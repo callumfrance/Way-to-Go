@@ -10,30 +10,38 @@ class Waypoint():
     """
 
     def __init__(self, in_latitude, in_longitude, in_altitude):
-        self.set_latitude(in_latitude)
-        self.set_longitude(in_longitude)
-        self.set_altitude(in_altitude)
+        self.latitude = in_latitude
+        self.longitude = in_longitude
+        self.altitude = in_altitude
 
     @property
     def latitude(self):
-        return self._latitude
+        return self.latitude
 
     @latitude.setter
     def latitude(self, in_latitude):
-        if in_latitude < -90.0 or in_latitude > 90.0:
+        if isinstance(in_latitude, float):
+            if in_latitude > -90.0 and in_latitude < 90.0:
+                self.latitude = in_latitude
+            else:
+                raise ValueError("Latitude is out of normal bounds")
+        else:
             raise ValueError("Latitude is out of normal bounds")
-        self.latitude = in_latitude
 
     @property
     def longitude(self):
-        return self._longitude
+        return self.longitude
 
     @longitude.setter
     def longitude(self, in_longitude):
-        if in_longitude < -180.0 or in_longitude > 180.0:
+        if isinstance(in_longitude, float):
+            if in_longitude > -180.0 and in_longitude < 180.0:
+                self.longitude = in_longitude
+            else:
+                raise ValueError("Longitude is out of normal bounds")
+        else:
             raise ValueError("Longitude is out of normal bounds")
-        self.longitude = in_longitude
 
     @property
     def altitude(self):
-        return self._altitude
+        return self.altitude
