@@ -2,11 +2,11 @@ from abc import ABC, abstractmethod
 """Segment.py"""
 class Segment(ABC):
     @description.setter
-    @abstractmethod
+    # @abstractmethod
     def description(self):
         raise NotImplementedError
 
     @node.setter
-    @abstractmethod
+    # @abstractmethod
     def node(self):
         raise NotImplementedError
