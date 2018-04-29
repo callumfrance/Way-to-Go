@@ -1,6 +1,8 @@
 """route.py"""
 import re
 from segment import Segment
+from waypoint import Waypoint
+
 
 class Route(Segment):
     """
@@ -12,10 +14,12 @@ class Route(Segment):
         r_name: the name of the route (only contains [a-zA-Z0-9_])
         r_desc: the route description (cannot contan a newline character)
     """
-    def __init__(self, r_desc, r_name):
+    def __init__(self, r_name, r_desc, in_waypoints=None):
         self.waypoints = list()
         self.route_desc = r_desc
         self.r_name = r_name
+        if in_waypoints is not None:
+            self.add_waypoints(in_waypoints)
 
     @property
     def r_name(self):
@@ -44,8 +48,25 @@ class Route(Segment):
         else:
             self.route_desc = in_route_desc
 
-    def add_waypoint(self, in_waypoint, pos=None):
+    def add_waypoints(self, in_waypoints):
+        """Iterates 'add_waypoint' to add a list full of waypoints."""
+        if in_waypoints is list:
+            for x in in_waypoints:
+                self.add_waypoint(x)
+        else:
+            raise TypeError("Multiple waypoints should be a 'list' data type")
+
+    def add_waypoint(self, in_waypoint=None,
+                     in_lat=None, in_long=None, in_alt=None, pos=None):
         """adds a waypoint to the route object"""
+        if in_waypoint is None or not isinstance(in_waypoint, Waypoint):
+            if in_lat is None or in_long is None or in_alt is None \
+                    or not isinstance(in_lat, float) \
+                    or not isinstance(in_long, float) \
+                    or not isinstance(in_alt, float):
+                raise TypeError("Either waypoint object, or its attributes")
+            else:
+                in_waypoint = Waypoint(in_lat, in_long, in_alt)
         if pos is not None:
             self.waypoints.insert(pos, in_waypoint)
         else:
