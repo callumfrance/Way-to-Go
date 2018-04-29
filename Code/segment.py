@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
-"""Segment.py"""
-class Segment(ABC):
-    @description.setter
-    # @abstractmethod
-    def description(self):
-        raise NotImplementedError
+"""
+Segment.py
+"""
 
-    @node.setter
-    # @abstractmethod
-    def node(self):
-        raise NotImplementedError
+
+class Segment(ABC):
+
+    @abstractmethod
+    def calc_metres_dist(self):
+        pass

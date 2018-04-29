@@ -13,55 +13,71 @@ class WaypointTestCase(unittest.TestCase):
     def setUp(self):
         self.wp_a = Waypoint(33.3, 44.4, 55.5)
 
+    def test_constructor(self):
+        """Check constructor validity"""
+        with self.assertRaises(TypeError):
+            wp_b = Waypoint("grasp", 12.5, 0.01)
+            print("wp_b is: {}".format(wp_b))
+        with self.assertRaises(TypeError):
+            wp_b = Waypoint(45.5, "gorilla", -10.21)
+            print("wp_b is: {}".format(wp_b))
+        with self.assertRaises(TypeError):
+            wp_b = Waypoint(45.5, 175.2, "lion")
+            print("wp_b is: {}".format(wp_b))
+
     def test_set_latitude(self):
         """Checks latitude validity."""
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.wp_a.latitude = 131
+            print(self.wp_a)
+        print(self.wp_a)
         with self.assertRaises(ValueError):
             self.wp_a.latitude = -90.01
-        with self.assertRaises(ValueError):
+            print(self.wp_a)
+        print(self.wp_a)
+        with self.assertRaises(TypeError):
             self.wp_a.latitude = "elephant"
-        print(self.wp_a.latitude)
+            print(self.wp_a)
+        print(self.wp_a)
         self.wp_a.latitude = -88.0
         self.assertEqual(self.wp_a.latitude, -88.0)
-        print(self.wp_a.latitude)
+        print(self.wp_a)
 
     def test_set_longitude(self):
         """Checks longitude validity."""
         with self.assertRaises(ValueError):
             self.wp_a.longitude = 180.01
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.wp_a.longitude = -300
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.wp_a.longitude = "giraffe"
-        print(self.wp_a.longitude)
+        print(self.wp_a)
         self.wp_a.longitude = 0.0
         self.assertEqual(self.wp_a.longitude, 0)
-        print(self.wp_a.longitude)
+        print(self.wp_a)
         self.wp_a.longitude = -108.0
         self.assertEqual(self.wp_a.longitude, -108.0)
-        print(self.wp_a.longitude)
+        print(self.wp_a)
 
     def test_set_altitude(self):
         """Checks altitude validity."""
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             self.wp_a.altitude = "hello world"
-        print(self.wp_a.altitude)
+            print(self.wp_a)
+        print(self.wp_a)
         self.wp_a.altitude = -10000.0
         self.assertEqual(self.wp_a.altitude, -10000.0)
-        print(self.wp_a.altitude)
+        print(self.wp_a)
         self.wp_a.altitude = 5123.43
         self.assertEqual(self.wp_a.altitude, 5123.43)
-        print(self.wp_a.altitude)
+        print(self.wp_a)
 
     def test_waypoint(self):
         """Tests that a waypoint is correctly constructed."""
         self.assertEqual(self.wp_a.latitude, 33.3)
         self.assertEqual(self.wp_a.longitude, 44.4)
         self.assertEqual(self.wp_a.altitude, 55.5)
-        print(self.wp_a.latitude,
-              self.wp_a.longitude,
-              self.wp_a.altitude)
+        print(self.wp_a)
 
 
 if __name__ == '__main__':

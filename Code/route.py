@@ -38,7 +38,7 @@ class Route(Segment):
     @property
     def route_desc(self):
         """route description"""
-        return self.route_desc
+        return self._route_desc
 
     @route_desc.setter
     def route_desc(self, in_route_desc):
@@ -75,3 +75,7 @@ class Route(Segment):
     def retrieve_waypoint(self, pos):
         """retrieves a waypoint at a specified point along the route"""
         return self.waypoints[pos]
+
+# must be implemented
+    def calc_metres_dist(self):
+        pass
