@@ -21,7 +21,7 @@ class Waypoint:
     """
 
     def __init__(self, in_latitude, in_longitude, in_altitude):
-        print("{} {} {}".format(in_latitude, in_longitude, in_altitude))
+        # print("{} {} {}".format(in_latitude, in_longitude, in_altitude))
         self.latitude = in_latitude
         self.longitude = in_longitude
         self.altitude = in_altitude
