@@ -8,7 +8,7 @@ from segment import Segment
 from waypoint import Waypoint
 
 
-class Description(Waypoint, Segment):
+class Description(Segment):
     """
     A description is the leaf node in the Segment composite pattern.
 
@@ -26,14 +26,19 @@ class Description(Waypoint, Segment):
         point : Waypoint
             The position along the route that this description applies to.
     """
-    def __init__(self, in_desc="", in_lat, in_long, in_alt):
-        try:
-            Waypoint.__init__(self, in_lat, in_long, in_alt)
-        except ValueError as e:
-            raise ValueError
-        except TypeError as e:
-            raise TypeError
+
+    def __init__(self, in_desc="", in_waypoint=None,
+                 in_lat=None, in_long=None, in_alt=None):
         self.description = in_desc
+        try:
+            self.point = in_waypoint
+        except TypeError as e:
+            try:
+                self.point = Waypoint(in_lat, in_long, in_alt)
+            except TypeError as e:
+                raise TypeError("Invalid Description class parameters")
+            except ValueError as e:
+                raise ValueError("Invalid Description class parameters")
 
     @property
     def description(self):
@@ -46,20 +51,14 @@ class Description(Waypoint, Segment):
         else:
             self._description = in_description
 
-    @Override
+    @property
+    def point(self):
+        return self._point
+
     def __str__(self):
-        """
-        [lat],[long],[alt],[description]
-        or
-        [lat],[long],[alt]
-        """
-        str = Waypoint.__str__(self)
-        if self._description is not "":
-            str += ","
-        return '{}{}'.format(str, self._description)
+        return '{},{}'.format(self._point, self._description)
 
 # must be implemented
     def calc_metres_dist(self):
-# list(3)
         pass
 
