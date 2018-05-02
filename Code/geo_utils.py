@@ -6,7 +6,7 @@ A stub used in order to implement Way-to-Go
 
 # Author: Callum France
 
-from math import radians, sin, cos, cosh
+from math import radians, sin, cos, acos
 import data
 
 
@@ -16,8 +16,6 @@ class GeoUtils(object):
     This class is a stub designed to implement several key facets
     used by Way-to-Go.
     """
-
-
     @staticmethod
     def retrieve_route_data():
         """Inserts raw route data into program.
@@ -58,6 +56,6 @@ class GeoUtils(object):
         part_d = cos(radians(lat2))
         part_e = cos(radians(abs(long1 - long2)))
 
-        sum_x = cosh(part_a*part_b + part_c*part_d*part_e)
+        sum_x = acos(part_a*part_b + part_c*part_d*part_e)
         final_z = 6371000 * sum_x
         return final_z

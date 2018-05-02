@@ -7,6 +7,6 @@ Segment.py
 class Segment(ABC):
 
     @abstractmethod
-    def calc_metres_dist(self):
+    def calc_metres_dist(self, next_segment=None):
         pass
 

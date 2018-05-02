@@ -6,6 +6,7 @@ Description
 
 from segment import Segment
 from waypoint import Waypoint
+from geo_utils import GeoUtils
 
 
 class Description(Waypoint, Segment):
@@ -43,18 +44,32 @@ class Description(Waypoint, Segment):
         self._description = in_desc
 
     def __str__(self):
-        """
-        [lat],[long],[alt],[description]
-        or
-        [lat],[long],[alt]
+        """Gives the string formatted output of the class.
+
+        Returns:
+            [lat],[long],[alt],[description]
+            or
+            [lat],[long],[alt]
         """
         desc_str = Waypoint.__str__(self)
         if self._description is not "":
             desc_str += ","
         return '{}{}'.format(desc_str, self._description)
 
-# must be implemented
-    def calc_metres_dist(self):
-# list(3)
-        pass
+    def calc_metres_dist(self, next_segment=None):
+        """Calls GeoUtils for two points along a route.
+
+        Arguments:
+            next_segment : Segment
+                The other 'waypoint' values to find distance between.
+
+        Returns:
+            A double value representing the Earth distance between two points.
+        """
+        dist = 0.0
+        if next_segment is not None:
+            dist = GeoUtils.calc_metres_distance(self.latitude, self.longitude,
+                                                 next_segment.latitude,
+                                                 next_segment.longitude)
+        return dist
 

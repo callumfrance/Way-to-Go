@@ -1,4 +1,6 @@
-"""route.py"""
+"""
+Route
+"""
 import re
 from segment import Segment
 from waypoint import Waypoint
@@ -9,22 +11,24 @@ class Route(Segment):
     A route is a collection of joined waypoints with descriptions.
 
     Attributes:
+        r_name: the name of the route (only contains [a-zA-Z0-9_])
+
+        r_desc: the route description (cannot contain a newline character)
+
         pathway: a linked list of 'Segments'
             Represents the route path
-        r_name: the name of the route (only contains [a-zA-Z0-9_])
-        r_desc: the route description (cannot contan a newline character)
     """
-    def __init__(self, r_name, r_desc, in_pathway=None):
+    def __init__(self, in_r_name, in_r_desc, in_pathway=None):
         self.pathway = list()
-        self.route_desc = r_desc
-        self.r_name = r_name
+        self.r_desc = in_r_desc
+        self.r_name = in_r_name
         if in_pathway is not None:
-            self.add_waypoints(in_pathway)
+            self.extend(in_pathway)
 
     @property
     def r_name(self):
         """route name"""
-        return self.r_name
+        return self._r_name
 
     @r_name.setter
     def r_name(self, in_route_name):
@@ -32,54 +36,93 @@ class Route(Segment):
         pattern = r'[^\_a-zA-Z0-9]'
         if re.search(pattern, in_route_name):
             raise ValueError("Route name must only have:\ta-zA-Z0-9_")
-        else:
-            self.r_name = in_route_name
+        self._r_name = in_route_name
 
     @property
-    def route_desc(self):
+    def r_desc(self):
         """route description"""
-        return self._route_desc
+        return self._r_desc
 
-    @route_desc.setter
-    def route_desc(self, in_route_desc):
+    @r_desc.setter
+    def r_desc(self, in_route_desc):
         """route description does not allow the newline character"""
         if "\n" in in_route_desc:
             raise ValueError("Description cannot contain newline")
-        else:
-            self.route_desc = in_route_desc
+        self._r_desc = in_route_desc
 
-    def add_waypoints(self, in_waypoints):
-        """Iterates 'add_waypoint' to add a list full of waypoints."""
-        if in_waypoints is list:
-            for x in in_waypoints:
-                self.add_waypoint(x)
-        else:
-            raise TypeError("Multiple waypoints should be a 'list' data type")
+    @property
+    def pathway(self):
+        return self._pathway
 
-    def add_waypoint(self, in_waypoint=None,
-                     in_lat=None, in_long=None, in_alt=None, pos=None):
-        """adds a waypoint to the route object"""
-        if in_waypoint is None or not isinstance(in_waypoint, Waypoint):
-            if in_lat is None or in_long is None or in_alt is None \
-                    or not isinstance(in_lat, float) \
-                    or not isinstance(in_long, float) \
-                    or not isinstance(in_alt, float):
-                raise TypeError("Either waypoint object, or its attributes")
+    @pathway.setter
+    def pathway(self, val):
+        self._pathway = val
+
+    def append(self, in_seg):
+        """Adds only one Segment to the end of pathway.
+
+        If you try and add more than one item, it will call 'extend' instead.
+
+        Parameters:
+            in_seg : Segment
+
+        Returns:
+            A list of Segments representing the routes pathway.
+        """
+        if isinstance(in_seg, list):
+            self.extend(in_seg)
+        else:
+            self.pathway = self.pathway + [in_seg]
+        return self.pathway
+
+    def extend(self, in_multi_segs):
+        return self.pathway.extend(in_multi_segs)
+
+    def retrieve_segment(self, pos):
+        """Retrieves a segment at a specified point along the route."""
+        return self.pathway[pos]
+
+    def __str__(self):
+        """Gives the string formatted output of the class."""
+        route_str = self.r_name + ":\n\"" + self.r_desc + "\"\n"
+        for x in self.pathway:
+            route_str = route_str + x.__str__() + "\n"
+        return route_str
+
+    def calc_metres_dist(self, next_segment=None):
+        """
+        Selects two adjacent pathways and finds the distance between them.
+        If the first pathway is actually a sub-route, it recursively
+        finds that routes total distance, and adds that to this routes distance.
+        Terminates at segments: 'seg' = length-1 and 'next_seg' = length
+
+        Parameters:
+            next_segment : Segment
+
+        Returns:
+            cumulative : double
+        """
+        cumulative = 0.0
+        for i, seg in zip(range(len(self.pathway)-1), self.pathway):
+            """
+            Loops over all elements in pathway except the last one.
+            Using zip with the length of 'pathway-1' terminates the
+            loops last 'segment' early - there is no 'next' at that point
+            """
+            next_seg = self.pathway[i+1]
+            if isinstance(seg, Route):
+                """
+                if seg is a Route, recurse and find that Routes distance
+                """
+                cumulative += seg.calc_metres_dist(None)
             else:
-                in_waypoint = Waypoint(in_lat, in_long, in_alt)
-        if pos is not None:
-            self.waypoints.insert(pos, in_waypoint)
-        else:
-            self.waypoints.append(in_waypoint)
-
-    def retrieve_waypoint(self, pos):
-        """retrieves a waypoint at a specified point along the route"""
-        return self.waypoints[pos]
-
-# must be implemented
-    def calc_metres_dist(self):
-        for(Segment s : pathway)
-
-
-
+                """
+                if next_seg is a Route, find its 1st waypoint
+                """
+                if isinstance(next_seg, Route):
+                    x = next_seg.pathway[0]
+                else:
+                    x = next_seg
+                cumulative += seg.calc_metres_dist(x)
+        return cumulative
 
