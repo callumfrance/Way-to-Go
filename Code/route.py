@@ -3,7 +3,6 @@ Route
 """
 import re
 from segment import Segment
-from waypoint import Waypoint
 
 
 class Route(Segment):
@@ -83,10 +82,12 @@ class Route(Segment):
         return self.pathway[pos]
 
     def __str__(self):
-        """Gives the string formatted output of the class."""
         route_str = self.r_name + ":\n\"" + self.r_desc + "\"\n"
         for x in self.pathway:
-            route_str = route_str + x.__str__() + "\n"
+            if isinstance(x, Route):
+                route_str += "{}\t{}\n".format(x.r_name, x.pathway[0].__str__())
+            else:
+                route_str += "{}\n".format(x.__str())
         return route_str
 
     def calc_metres_dist(self, next_segment=None):
@@ -124,5 +125,41 @@ class Route(Segment):
                 else:
                     x = next_seg
                 cumulative += seg.calc_metres_dist(x)
+        return cumulative
+
+    def calc_metres_vertical(self, next_segment=None):
+        """Determines vertical climb and descent.
+
+        Parameters:
+            next_segment : Segment
+
+        Returns:
+            cumulative : float[2]
+                cumulative[0] is the total climb distance in metres
+                cumulative[1] is the total descent distance in metres
+        """
+        cumulative = [0.0, 0.0]
+        for i, seg in zip(range(len(self.pathway)-1), self.pathway):
+            """
+             Loops over all elements in pathway except the last one.
+             Using zip with the length of 'pathway-1' terminates the
+             loops last 'segment' early - there is no 'next' at that point
+             """
+            next_seg = self.pathway[i+1]
+            if isinstance(seg, Route):
+                """
+                if seg is a Route, recurse and find that Routes distance
+                """
+                subr_tot = seg.calc_metres_vertical(None)
+                cumulative[0] += subr_tot[0]
+                cumulative[1] += subr_tot[1]
+            else:
+                if isinstance(next_seg, Route):
+                    x = next_seg.pathway[0]
+                else:
+                    x = next_seg
+                seg_vert = seg.calc_metres_vertical(x)
+                cumulative[0] += seg_vert[0]
+                cumulative[1] += seg_vert[1]
         return cumulative
 

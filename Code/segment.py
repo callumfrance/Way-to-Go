@@ -10,3 +10,7 @@ class Segment(ABC):
     def calc_metres_dist(self, next_segment=None):
         pass
 
+    @abstractmethod
+    def calc_metres_vertical(self, next_segment=None):
+        pass
+
