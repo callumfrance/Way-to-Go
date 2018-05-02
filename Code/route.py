@@ -9,17 +9,17 @@ class Route(Segment):
     A route is a collection of joined waypoints with descriptions.
 
     Attributes:
-        waypoints: a linked list of 'Waypoint' (long, lat, alt)
-            that represent the path
+        pathway: a linked list of 'Segments'
+            Represents the route path
         r_name: the name of the route (only contains [a-zA-Z0-9_])
         r_desc: the route description (cannot contan a newline character)
     """
-    def __init__(self, r_name, r_desc, in_waypoints=None):
-        self.waypoints = list()
+    def __init__(self, r_name, r_desc, in_pathway=None):
+        self.pathway = list()
         self.route_desc = r_desc
         self.r_name = r_name
-        if in_waypoints is not None:
-            self.add_waypoints(in_waypoints)
+        if in_pathway is not None:
+            self.add_waypoints(in_pathway)
 
     @property
     def r_name(self):
@@ -78,4 +78,8 @@ class Route(Segment):
 
 # must be implemented
     def calc_metres_dist(self):
-        pass
+        for(Segment s : pathway)
+
+
+
+
