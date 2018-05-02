@@ -25,6 +25,8 @@ class Waypoint:
         self.latitude = in_latitude
         self.longitude = in_longitude
         self.altitude = in_altitude
+        # print("\nWaypoint is: {},{},{}".format(self.latitude, self.longitude,
+        #                                        self.altitude))
 
     @property
     def latitude(self):
@@ -34,9 +36,9 @@ class Waypoint:
     @latitude.setter
     def latitude(self, in_latitude):
         if not isinstance(in_latitude, float):
-            raise TypeError
+            raise TypeError("Latitude must be a float")
         if not -90.0 <= in_latitude <= 90.0:
-            raise ValueError
+            raise ValueError("Latitude must be between -90.0 and 90.0")
         self._latitude = in_latitude
 
     @property
@@ -47,9 +49,9 @@ class Waypoint:
     @longitude.setter
     def longitude(self, in_longitude):
         if not isinstance(in_longitude, float):
-            raise TypeError
+            raise TypeError("Longitude must be a float")
         if not -180.0 <= in_longitude <= 180.0:
-            raise ValueError
+            raise ValueError("Longitude must be between -180.0 and 180.0")
         self._longitude = in_longitude
 
     @property
@@ -63,12 +65,6 @@ class Waypoint:
             raise TypeError("Altitude must be a float")
         self._altitude = in_altitude
 
-    @altitude.setter
-    def altitude(self, in_altitude):
-        if not isinstance(in_altitude, float):
-            raise TypeError
-        self._altitude = in_altitude
-
     def __str__(self):
-        return '{},{},{}'.format(self._latitude, self._longitude,
-                                 self._altitude)
+        return '{},{},{}'.format(self.latitude, self.longitude,
+                                 self.altitude)

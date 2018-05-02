@@ -27,11 +27,13 @@ class Description(Waypoint, Segment):
     def __init__(self, in_lat, in_long, in_alt, in_desc=""):
         try:
             Waypoint.__init__(self, in_lat, in_long, in_alt)
-        except ValueError as e:
-            raise ValueError
+            self.description = in_desc
+            # print("\nDescription is: {}".format(self.description))
         except TypeError as e:
-            raise TypeError
-        self.description = in_desc
+            raise TypeError("Description inputs are not correct datatypes")
+        except ValueError as e:
+            raise ValueError("Description inputs are correctly typed but not"
+                             "allowed")
 
     @property
     def description(self):
@@ -39,8 +41,9 @@ class Description(Waypoint, Segment):
 
     @description.setter
     def description(self, in_desc):
-        if in_desc[0] is "*" or "\n" in in_desc:
-            raise ValueError("Segment description cannot contain * or \\n")
+        if in_desc is not None and in_desc is not "":
+            if in_desc[0] is "*" or "\n" in in_desc:
+                raise ValueError("Segment description cannot contain * or \\n")
         self._description = in_desc
 
     def __str__(self):
