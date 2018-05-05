@@ -12,14 +12,39 @@ class RouteTestCase(unittest.TestCase):
     """Test harness for the Route class"""
 
     def setUp(self):
-        b_1 = [33.3, 44.4, 0.0]
-        b_2 = [0.61, -12.2, 100.1]
-        b_3 = [-6.66, -179.9, 124.3]
-        b_point_list = list[b_1, b_2, b_3]
-        self.route_a = Route("Hill Climb", "A long uphill")
-        self.route_b = Route("Crit", "A cyclic bicycle route", b_point_list)
+        self.d1_1 = Description(-31.94,115.75,47.1,"d1_1 is hilly")
+        self.d1_2 = Description(-31.94,115.75,55.3,"d1_2 is slopey")
+        self.d1_3 = Description(-31.94,115.75,71.0,"d1_3 is rocky")
+        self.d1_4 = Description(-31.93,115.75,108.0,"d1_4 is piney")
+        self.d2_1 = Description(-31.96,115.80,63.0,"d2_1 is loamy")
+        self.d2_2 = Description(-31.95,115.78,45.3,"d2_2 is sandy")
 
-    def test_add_waypoint(self):
-        self.route_a.add_waypoint(self.b_1)
+    def test_r_desc(self):
+        """Tests the route description"""
+        pass
 
-    def test_add_waypoints(self):
+    def test_r_name(self):
+        """Tests the route name string"""
+        pass
+
+    def test_add_pathway(self):
+        """Tests adding one Segment to self.pathway"""
+        pass
+
+    def test_add_pathways(self):
+        """Tests adding multiple Segments to self.pathway"""
+        pass
+
+    def test_calc_dist(self):
+        """Tests the calc_metres_dist() algorithm"""
+        pass
+
+    def test_calc_vert(self):
+        """Tests the calc_metres_vertical() algorithm"""
+        pass
+
+if __name__ == '__main__':
+    unittest.main()
+
+# Run the following in the shell:
+#    python route_test.py -v

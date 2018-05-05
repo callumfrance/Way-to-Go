@@ -75,6 +75,7 @@ class Route(Segment):
         return self.pathway
 
     def extend(self, in_multi_segs):
+        """Adds multiple pathways to the Route"""
         return self.pathway.extend(in_multi_segs)
 
     def retrieve_segment(self, pos):
