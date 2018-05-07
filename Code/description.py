@@ -6,7 +6,7 @@ Description
 
 from segment import Segment
 from waypoint import Waypoint
-from geo_utils import GeoUtils
+from GeoUtils import GeoUtils
 
 
 class Description(Waypoint, Segment):
@@ -72,7 +72,7 @@ class Description(Waypoint, Segment):
         """
         dist = 0.0
         if next_segment is not None:
-            dist = GeoUtils.calc_metres_distance(self.latitude, self.longitude,
+            dist = GeoUtils.calcMetresDistance(self.latitude, self.longitude,
                                                  next_segment.latitude,
                                                  next_segment.longitude)
         return dist

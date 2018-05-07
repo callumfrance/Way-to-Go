@@ -3,6 +3,8 @@ Route
 """
 import re
 from segment import Segment
+from description import Description
+from waypoint import Waypoint
 
 
 class Route(Segment):
@@ -17,12 +19,12 @@ class Route(Segment):
         pathway: a linked list of 'Segments'
             Represents the route path
     """
-    def __init__(self, in_r_name, in_r_desc, in_pathway=None):
+    def __init__(self, in_r_name, in_r_desc="", in_pathway=None):
         self.pathway = list()
         self.r_desc = in_r_desc
         self.r_name = in_r_name
         if in_pathway is not None:
-            self.extend(in_pathway)
+            self.append_path(in_pathway)
 
     @property
     def r_name(self):
@@ -57,7 +59,7 @@ class Route(Segment):
     def pathway(self, val):
         self._pathway = val
 
-    def append(self, in_seg):
+    def append_path(self, in_seg):
         """Adds only one Segment to the end of pathway.
 
         If you try and add more than one item, it will call 'extend' instead.
@@ -69,26 +71,55 @@ class Route(Segment):
             A list of Segments representing the routes pathway.
         """
         if isinstance(in_seg, list):
-            self.extend(in_seg)
+            self.extend_path(in_seg)
+        elif not self.valid_segment_check(in_seg):
+            raise TypeError("Can only append Route/Description/Waypoint")
         else:
-            self.pathway = self.pathway + [in_seg]
-        return self.pathway
+            self.pathway.append(in_seg)
 
-    def extend(self, in_multi_segs):
+    def extend_path(self, in_multi_segs):
         """Adds multiple pathways to the Route"""
-        return self.pathway.extend(in_multi_segs)
+        for x in in_multi_segs:
+            if not self.valid_segment_check(x):
+                raise TypeError("Can only extend Route/Description/Waypoint")
+        self.pathway.extend(in_multi_segs)
 
     def retrieve_segment(self, pos):
         """Retrieves a segment at a specified point along the route."""
+# This needs to be extended.
+# In order for a new route to be created (case 2), it won't have any
+# segments to begin with, but there needs to be 'something' there...
         return self.pathway[pos]
+
+    @staticmethod
+    def valid_segment_check(seg_to_check):
+        """Static method to check if a segment is valid for the route_list.
+
+        Parameters:
+            seg_to_check : Object
+                The object to validate - is it a Route, Description, or Waypoint
+
+        Returns:
+            is_valid : Boolean
+                True only if seg_to_check is Route/Description/Waypoint
+        """
+        is_valid = False
+        if isinstance(seg_to_check, Route) or \
+                isinstance(seg_to_check, Description) or \
+                isinstance(seg_to_check, Waypoint):
+            is_valid = True
+        return is_valid
 
     def __str__(self):
         route_str = self.r_name + ":\n\"" + self.r_desc + "\"\n"
         for x in self.pathway:
             if isinstance(x, Route):
-                route_str += "{}\t{}\n".format(x.r_name, x.pathway[0].__str__())
+                route_str += "\t{},*{}\n".format(
+                    x.pathway[0].__str__(), x.r_name)
             else:
                 route_str += "{}\n".format(x.__str())
+
+                route_str += "\t{}\n".format(x.__str__())
         return route_str
 
     def calc_metres_dist(self, next_segment=None):
@@ -146,7 +177,8 @@ class Route(Segment):
              Using zip with the length of 'pathway-1' terminates the
              loops last 'segment' early - there is no 'next' at that point
              """
-            next_seg = self.pathway[i+1]
+            # next_seg = self.pathway[i+1]
+            next_seg = self.retrieve_segment(i+1)
             if isinstance(seg, Route):
                 """
                 if seg is a Route, recurse and find that Routes distance
@@ -156,7 +188,8 @@ class Route(Segment):
                 cumulative[1] += subr_tot[1]
             else:
                 if isinstance(next_seg, Route):
-                    x = next_seg.pathway[0]
+                    # x = next_seg.pathway[0]
+                    x = next_segment.retrieve_segment(0)
                 else:
                     x = next_seg
                 seg_vert = seg.calc_metres_vertical(x)
