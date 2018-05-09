@@ -157,6 +157,10 @@ class Route(Segment):
                 else:
                     x = next_seg
                 cumulative += seg.calc_metres_dist(x)
+
+        # Because float values are inprecise, rounding is necessary
+        cumulative[0] = round(cumulative[0], 2)
+        cumulative[1] = round(cumulative[1], 2)
         return cumulative
 
     def calc_metres_vertical(self, next_segment=None):
@@ -186,15 +190,21 @@ class Route(Segment):
                 subr_tot = seg.calc_metres_vertical(None)
                 cumulative[0] += subr_tot[0]
                 cumulative[1] += subr_tot[1]
+                y = seg.retrieve_segment(len(seg.pathway)-1)
             else:
-                if isinstance(next_seg, Route):
-                    # x = next_seg.pathway[0]
-                    x = next_segment.retrieve_segment(0)
-                else:
-                    x = next_seg
-                seg_vert = seg.calc_metres_vertical(x)
-                cumulative[0] += seg_vert[0]
-                cumulative[1] += seg_vert[1]
+                y = seg
+
+            if isinstance(next_seg, Route):
+                # x = next_seg.pathway[0]
+                x = next_seg.retrieve_segment(0)
+            else:
+                x = next_seg
+
+            seg_vert = y.calc_metres_vertical(x)
+            cumulative[0] += seg_vert[0]
+            cumulative[1] += seg_vert[1]
+
+        # Because float values are inprecise, rounding is necessary
         cumulative[0] = round(cumulative[0], 2)
         cumulative[1] = round(cumulative[1], 2)
         return cumulative

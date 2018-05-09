@@ -81,10 +81,10 @@ class RouteTestCase(unittest.TestCase):
             print(r1.__str__())
 
         r1.append_path(self.wp_1)
-        self.assertEqual(r1.__str__(), "Scorching_Summer A hot one!\n\t"
-                                       "-31.94,115.75,47.1,d1_1 is hilly\n\t"
-                                       "-31.94,115.75,55.3,d1_2 is slippery\n\t"
-                                       "-31.93,115.74,102.3")
+        self.assertEqual(r1.__str__(),"Scorching_Summer A hot one!\n\t"
+                                      "-31.94,115.75,47.1,d1_1 is hilly\n\t"
+                                      "-31.94,115.75,55.3,d1_2 is slippery\n\t"
+                                      "-31.93,115.74,102.3")
 
 # should it fail if you try to append after a Waypoint?
 
@@ -92,18 +92,18 @@ class RouteTestCase(unittest.TestCase):
         """Tests adding multiple Segments to self.pathway"""
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.extend_path([self.d1_1, self.d1_2, self.d1_3])
-        self.assertEqual(r1.__str__(), "Scorching_Summer A hot one!\n\t"
-                                       "-31.94,115.75,47.1,d1_1 is hilly\n\t"
-                                       "-31.94,115.75,55.3,d1_2 is slippery\n\t"
-                                       "-31.94,115.75,71.0,d1_3 is rocky")
+        self.assertEqual(r1.__str__(),"Scorching_Summer A hot one!\n\t"
+                                      "-31.94,115.75,47.1,d1_1 is hilly\n\t"
+                                      "-31.94,115.75,55.3,d1_2 is slippery\n\t"
+                                      "-31.94,115.75,71.0,d1_3 is rocky")
         del r1
 
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.append_path([self.d1_1, self.d1_2, self.d1_3])
-        self.assertEqual(r1.__str__(), "Scorching_Summer A hot one!\n\t"
-                                       "-31.94,115.75,47.1,d1_1 is hilly\n\t"
-                                       "-31.94,115.75,55.3,d1_2 is slippery\n\t"
-                                       "-31.94,115.75,71.0,d1_3 is rocky")
+        self.assertEqual(r1.__str__(),"Scorching_Summer A hot one!\n\t"
+                                      "-31.94,115.75,47.1,d1_1 is hilly\n\t"
+                                      "-31.94,115.75,55.3,d1_2 is slippery\n\t"
+                                      "-31.94,115.75,71.0,d1_3 is rocky")
 
 # also add a Route to a Route
 
@@ -118,10 +118,16 @@ class RouteTestCase(unittest.TestCase):
 
     def test_calc_vert(self):
         """Tests the calc_metres_vertical() algorithm"""
-        r1 = Route("Scorching_Summer", "A hot one!")
-        r1.extend_path([self.d1_1, self.d1_2, self.d1_3, self.d1_4, self.wp_1])
+        # r1 = Route("Scorching_Summer", "A hot one!")
+        # r1.extend_path([self.d1_1, self.d1_2, self.d1_3, self.d1_4, self.wp_1])
+        # self.assertEqual(r1.calc_metres_vertical(), [60.90, 5.70])
+        # del r1
 
-        self.assertEqual(r1.calc_metres_vertical(), [60.90, 5.70])
+        r2 = Route("Wondrous_Winter", "Chilly!")
+        r2.extend_path([self.d2_1, self.d2_2])
+        r1 = Route("Scorching_Summer", "A hot one!")
+        r1.extend_path([self.d1_1, r2, self.d1_4])
+        self.assertEqual(r1.calc_metres_vertical(), [78.6, 17.7])
 
 # also do an example of a route within a route
 
