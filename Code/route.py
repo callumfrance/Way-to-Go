@@ -195,5 +195,7 @@ class Route(Segment):
                 seg_vert = seg.calc_metres_vertical(x)
                 cumulative[0] += seg_vert[0]
                 cumulative[1] += seg_vert[1]
+        cumulative[0] = round(cumulative[0], 2)
+        cumulative[1] = round(cumulative[1], 2)
         return cumulative
 
