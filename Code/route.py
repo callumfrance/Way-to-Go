@@ -93,7 +93,7 @@ class Route(Segment):
 
     @staticmethod
     def valid_segment_check(seg_to_check):
-        """Static method to check if a segment is valid for the route_list.
+        """Static method to check if a segment is valid for the pathway.
 
         Parameters:
             seg_to_check : Object
@@ -111,15 +111,15 @@ class Route(Segment):
         return is_valid
 
     def __str__(self):
-        route_str = self.r_name + ":\n\"" + self.r_desc + "\"\n"
+        route_str = self.r_name + " " + self.r_desc
         for x in self.pathway:
             if isinstance(x, Route):
-                route_str += "\t{},*{}\n".format(
+                route_str += "\n\t{},*{}".format(
                     x.pathway[0].__str__(), x.r_name)
             else:
-                route_str += "{}\n".format(x.__str())
+                # route_str += "{}\n".format(x.__str())
 
-                route_str += "\t{}\n".format(x.__str__())
+                route_str += "\n\t{}".format(x.__str__())
         return route_str
 
     def calc_metres_dist(self, next_segment=None):
