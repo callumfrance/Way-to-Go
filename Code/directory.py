@@ -12,8 +12,27 @@ Two observers -
 
 
 class Directory:
+    """The contents of the entire model i.e. all the routes.
+
+    Attributes:
+        route_list : dictionary of Routes
+            A map of all the known routes.
+            The key is each routes name.
+
+        dir_wide_update_obs : set of observers
+            The collection of observers that want to know when an update
+            is made to the Directory
+
+        single_route_retrieval_obs : set of observers
+            The collection of observers that want to know when a
+            specific Route's information is accessed
+    """
 
     def __init__(self):
+        """Constructor class
+
+        Initializes the dictionary and sets
+        """
         self.route_list = dict()  # a dictionary of all recorded routes
         self.dir_wide_update_obs = set()
         self.single_route_retrieval_obs = set()
@@ -24,7 +43,9 @@ class Directory:
 
     def update_directory(self, in_data):
         """
-        calls the segment factory to create objects using input.
+        [INCOMPLETE]
+
+        Calls the segment factory to create objects using input.
         then notifies all dir_wide_update_obs
 
         might also need to create another factory just to create routes
@@ -34,7 +55,8 @@ class Directory:
            """call the factory to make segments"""
 
     def retrieve_route_data(self, in_r_name):
-        """
+        """The accessor method for an individual Route in the Directory.
+
         Parameters:
             in_r_name : String
                 The name of the Route that must be retrieved from Directory
@@ -67,7 +89,10 @@ class Directory:
             pass
 
     def notify_dir_wide_update_obs(self):
-        """Will iterate through all observers and call relevant update code"""
+        """
+        [INCOMPLETE]
+        Will iterate through all observers and call relevant update code
+        """
         for o in self.dir_wide_update_obs:
             o.update("""stuff to do with Concrete observer""")
 
@@ -87,7 +112,11 @@ class Directory:
             pass
 
     def notify_single_route_retrieval_obs(self):
-        """Will iterate through all observers and call relevant update code"""
+        """
+        [INCOMPLETE]
+
+        Will iterate through all observers and call relevant update code
+        """
         for o in self.single_route_retrieval_obs:
             o.update("""stuff to do with Concrete observer""")
 
