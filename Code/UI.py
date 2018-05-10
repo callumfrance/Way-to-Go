@@ -12,7 +12,7 @@ class UI:
     def display_main_menu(self, in_directory):
         """The starting menu from which all courses of action sprout from.
         """
-        choice = 4
+        choice = 10
         while choice != 1 or choice != 2 or choice != 3:
             self.clear_screen()
             print("-----------------------------------------\n"
@@ -20,9 +20,9 @@ class UI:
                   "-----------------------------------------\n\n")
             print("\t1. View current routes \n"
                   "\t2. Update routes \n"
-                  "\t3. Exit\n")
+                  "\t3. Exit\n\n")
             print("{}".format(in_directory.__str__()))
-            choice = int(input("> "))
+            choice = int(input("\n> "))
         return choice
 
     def display_one_route(self, in_route):
@@ -30,13 +30,19 @@ class UI:
 
         Used to determine if a user wants to 'go' on this route.
         """
-        self.clear_screen()
-        print("---------------------------------------------\n"
-              "- - - - - - - - Route View  - - - - - - - - -\n"
-              "---------------------------------------------\n\n")
-        print("\t1. Begin route\n"
-              "\t2. Back\n\n")
-        print("{}".format(in_route.__str__()))
+        choice = 10
+        while choice != 1 or choice != 2:
+            self.clear_screen()
+            print("---------------------------------------------\n"
+                "- - - - - - - - Route View  - - - - - - - - -\n"
+                "---------------------------------------------\n\n")
+            print("\t1. Begin route\n"
+                "\t2. Back\n\n")
+            print("{}".format(in_route.__str__()))
+            choice = int(input("\n> "))
+            if choice != 1 or choice != 2:
+                print("\nPlease enter 1 to begin this route or 2 to go back\n")
+        return choice
 
     def display_tracking(self, in_tracker):
         """The console output of the Tracking mode of the program.

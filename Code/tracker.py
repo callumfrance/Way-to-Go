@@ -16,11 +16,11 @@ class Tracker:
         'e' - exit session early
     """
 
-    def __init__(self, in_curr_loc, in_route):
-        self.curr_loc = in_curr_loc
+    def __init__(self, in_route):
         self.the_route = in_route
-        self.remaining = self.calc_remaining()
-        self.next_wp = self.close_enough()
+        self.curr_loc = in_route.retrieve_segment(0)
+        self.next_wp = in_route.retrieve_segment(1)
+        self.remaining = self.calc_remaining(curr_loc)
 
     @property
     def curr_loc(self):
@@ -40,6 +40,15 @@ class Tracker:
     @property
     def next_wp(self):
         return self._next_wp
+
+    def __str__(self):
+        out_string = ""
+        out_string += "\tCurrent Location: " + self.curr_loc.__str__() + "\n"
+        out_string += "\tNext Waypoint: " + self.next_wp.__str__() + "\n"
+        out_string += "\tRemaining distance: " + self.remaining[0] + " m\n"
+        out_string += "\tRemaining climb: " + self.remaining[1] + " m\n"
+        out_string += "\tRemaining descent: " + self.remaining[2] + " m\n"
+        return out_string
 
     def calc_remaining(self):
         """Finds the remaining distance for the given route

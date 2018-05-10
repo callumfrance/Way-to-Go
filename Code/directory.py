@@ -69,6 +69,17 @@ class Directory:
         self.notify_single_route_retrieval_obs()
         return out_route
 
+    def __str__(self):
+        out_string = ""
+        iter = 1
+        for key, value in self.route_list.items():
+            out_string += iter + ". " key + " " + value.r_desc + "\n"
+            out_string += "\t" + value.retrieve_segment(0) + "\n"
+            out_string += "\t" + value.retrieve_segment(len(value.pathway)-1)
+            out_string += "\n\n"
+            iter += 1
+        return out_string
+
 # -------------
 # observer code
 # -------------
