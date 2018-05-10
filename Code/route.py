@@ -104,9 +104,7 @@ class Route(Segment):
                 True only if seg_to_check is Route/Description/Waypoint
         """
         is_valid = False
-        if isinstance(seg_to_check, Route) or \
-                isinstance(seg_to_check, Description) or \
-                isinstance(seg_to_check, Waypoint):
+        if isinstance(seg_to_check, (Description, Route, Waypoint)):
             is_valid = True
         return is_valid
 
@@ -133,7 +131,7 @@ class Route(Segment):
             next_segment : Segment
 
         Returns:
-            cumulative : double
+            cumulative : float
         """
         cumulative = 0.0
         for i, seg in zip(range(len(self.pathway)-1), self.pathway):
@@ -159,8 +157,7 @@ class Route(Segment):
                 cumulative += seg.calc_metres_dist(x)
 
         # Because float values are inprecise, rounding is necessary
-        cumulative[0] = round(cumulative[0], 2)
-        cumulative[1] = round(cumulative[1], 2)
+        cumulative = round(cumulative, 2)
         return cumulative
 
     def calc_metres_vertical(self, next_segment=None):
@@ -181,7 +178,6 @@ class Route(Segment):
              Using zip with the length of 'pathway-1' terminates the
              loops last 'segment' early - there is no 'next' at that point
              """
-            # next_seg = self.pathway[i+1]
             next_seg = self.retrieve_segment(i+1)
             if isinstance(seg, Route):
                 """
@@ -195,7 +191,6 @@ class Route(Segment):
                 y = seg
 
             if isinstance(next_seg, Route):
-                # x = next_seg.pathway[0]
                 x = next_seg.retrieve_segment(0)
             else:
                 x = next_seg

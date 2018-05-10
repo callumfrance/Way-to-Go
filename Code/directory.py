@@ -52,6 +52,7 @@ class Directory:
 # -------------
 
     def add_dir_wide_update_ob(self, observer):
+        """Adds a new observer to the set of observers"""
         self.dir_wide_update_obs.add(observer)
 
     def rem_dir_wide_update_ob(self, observer):
@@ -59,13 +60,19 @@ class Directory:
         Will do nothing if observer was never in there.
         ( use .remove() instead if an error needs to be raised)
         """
-        self.dir_wide_update_obs.discard(observer)
+        try:
+            self.dir_wide_update_obs.discard(observer)
+        except IndexError:
+            # should I raise an issue?
+            pass
 
     def notify_dir_wide_update_obs(self):
+        """Will iterate through all observers and call relevant update code"""
         for o in self.dir_wide_update_obs:
             o.update("""stuff to do with Concrete observer""")
 
     def add_single_route_retrieval_ob(self, observer):
+        """Adds a new observer to the set of observers"""
         self.single_route_retrieval_obs.add(observer)
 
     def rem_single_route_retrieval_ob(self, observer):
@@ -73,9 +80,14 @@ class Directory:
         Will do nothing if observer was never in there.
         ( use .remove() instead if an error needs to be raised)
         """
-        self.single_route_retrieval_obs.discard(observer)
+        try:
+            self.single_route_retrieval_obs.discard(observer)
+        except IndexError:
+            # should I raise an issue?
+            pass
 
     def notify_single_route_retrieval_obs(self):
+        """Will iterate through all observers and call relevant update code"""
         for o in self.single_route_retrieval_obs:
             o.update("""stuff to do with Concrete observer""")
 

@@ -17,7 +17,7 @@ class RouteTestCase(unittest.TestCase):
         self.d1_2 = Description(-31.94, 115.75, 55.3, "d1_2 is slippery")
         self.d1_3 = Description(-31.94, 115.75, 71.0, "d1_3 is rocky")
         self.d1_4 = Description(-31.93, 115.75, 108.0, "d1_4 is piney")
-        self.wp_1 = Waypoint(-31.93, 115.74, 102.3)
+        self.wp_1 = Waypoint(-31.92, 115.74, 102.3)
         self.d2_1 = Description(-31.96, 115.80, 63.0, "d2_1 is loamy")
         self.d2_2 = Description(-31.95, 115.78, 45.3, "d2_2 is sandy")
 
@@ -84,7 +84,7 @@ class RouteTestCase(unittest.TestCase):
         self.assertEqual(r1.__str__(),"Scorching_Summer A hot one!\n\t"
                                       "-31.94,115.75,47.1,d1_1 is hilly\n\t"
                                       "-31.94,115.75,55.3,d1_2 is slippery\n\t"
-                                      "-31.93,115.74,102.3")
+                                      "-31.92,115.74,102.3")
 
 # should it fail if you try to append after a Waypoint?
 
@@ -107,21 +107,28 @@ class RouteTestCase(unittest.TestCase):
 
 # also add a Route to a Route
 
-    # def test_calc_dist(self):
-    #     """Tests the calc_metres_dist() algorithm"""
-    #     r1 = Route("Scorching_Summer", "A hot one!")
-    #     r1.extend_path([self.d1_1, self.d1_2, self.d1_3, self.wp_1])
+    def test_calc_dist(self):
+        """Tests the calc_metres_dist() algorithm"""
+        r1 = Route("Scorching_Summer", "A hot one!")
+        r1.extend_path([self.d2_1, self.d2_2, self.d1_4])
+        self.assertEqual(r1.calc_metres_dist(), 5790.05)
+        del r1
 
-    #     self.assertEqual(r1.calc_metres_dist(), """the answer""")
+        r2 = Route("WW", "wwdesc")
+        r2.extend_path([self.d2_1, self.d2_2])
+        r1 = Route("SS", "ssdesc")
+        r1.extend_path([self.d1_3, r1, self.d1_2, self.wp_1])
+        self.assertEqual(r1.calc_metres_dist(), 12862.65)
+        print("test_calc_dist: {} is 12862.65".format(r1.calc_metres_dist()))
 
 # also do an example of a route within a route
 
     def test_calc_vert(self):
         """Tests the calc_metres_vertical() algorithm"""
-        # r1 = Route("Scorching_Summer", "A hot one!")
-        # r1.extend_path([self.d1_1, self.d1_2, self.d1_3, self.d1_4, self.wp_1])
-        # self.assertEqual(r1.calc_metres_vertical(), [60.90, 5.70])
-        # del r1
+        r1 = Route("Scorching_Summer", "A hot one!")
+        r1.extend_path([self.d1_1, self.d1_2, self.d1_3, self.d1_4, self.wp_1])
+        self.assertEqual(r1.calc_metres_vertical(), [60.90, 5.70])
+        del r1
 
         r2 = Route("Wondrous_Winter", "Chilly!")
         r2.extend_path([self.d2_1, self.d2_2])
