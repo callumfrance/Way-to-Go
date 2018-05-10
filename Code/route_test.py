@@ -118,7 +118,7 @@ class RouteTestCase(unittest.TestCase):
         r2 = Route("WW", "wwdesc")
         r2.extend_path([self.d2_1, self.d2_2])
         r1 = Route("SS", "ssdesc")
-        r1.extend_path([self.d1_3, r1, self.d1_2, self.wp_1])
+        r1.extend_path([self.d1_3, r2, self.d1_2, self.wp_1])
         self.assertEqual(r1.calc_metres_dist(), 12862.65)
         print("test_calc_dist: {} is 12862.65".format(r1.calc_metres_dist()))
 

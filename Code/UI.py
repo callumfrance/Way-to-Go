@@ -1,6 +1,7 @@
 import os
 
-class StandardView:
+
+class UI:
     """The original view class"""
 
     @staticmethod
