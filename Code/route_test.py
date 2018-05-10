@@ -112,15 +112,15 @@ class RouteTestCase(unittest.TestCase):
         """Tests the calc_metres_dist() algorithm"""
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.extend_path([self.d2_1, self.d2_2, self.d1_4])
-        self.assertEqual(r1.calc_metres_dist(), 5790.05)
+        self.assertEqual(r1.find_distance(), 5790.05)
         del r1
 
         r2 = Route("WW", "wwdesc")
         r2.extend_path([self.d2_1, self.d2_2])
+        self.assertEqual(r2.find_distance(), 2190.16)
         r1 = Route("SS", "ssdesc")
         r1.extend_path([self.d1_3, r2, self.d1_2, self.wp_1])
-        self.assertEqual(r1.calc_metres_dist(), 12862.65)
-        print("test_calc_dist: {} is 12862.65".format(r1.calc_metres_dist()))
+        self.assertEqual(r1.find_distance(), 12862.65)
 
 # also do an example of a route within a route
 
@@ -128,14 +128,18 @@ class RouteTestCase(unittest.TestCase):
         """Tests the calc_metres_vertical() algorithm"""
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.extend_path([self.d1_1, self.d1_2, self.d1_3, self.d1_4, self.wp_1])
-        self.assertEqual(r1.calc_metres_vertical(), [60.90, 5.70])
+        self.assertEqual(r1.find_vertical(), [60.90, 5.70])
+        self.assertEqual(r1.find_climb(), 60.90)
+        self.assertEqual(r1.find_descent(), 5.70)
         del r1
 
         r2 = Route("Wondrous_Winter", "Chilly!")
         r2.extend_path([self.d2_1, self.d2_2])
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.extend_path([self.d1_1, r2, self.d1_4])
-        self.assertEqual(r1.calc_metres_vertical(), [78.6, 17.7])
+        self.assertEqual(r1.find_vertical(), [78.6, 17.7])
+        self.assertEqual(r1.find_climb(), 78.6)
+        self.assertEqual(r1.find_descent(), 17.7)
 
 # also do an example of a route within a route
 

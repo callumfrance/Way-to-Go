@@ -126,6 +126,35 @@ class Route(Segment):
                 route_str += "\n\t{}".format(x.__str__())
         return route_str
 
+    def find_distance(self):
+        """Wrapper class to find horizontal distance across the Route"""
+        return round(self.calc_metres_dist(), 2)
+
+    def find_vertical(self):
+        """Wrapper class to find vertical distance along the Route"""
+        vert_ans_list = self.calc_metres_vertical()
+        vert_ans_list[0] = round(vert_ans_list[0], 2)
+        vert_ans_list[1] = round(vert_ans_list[1], 2)
+        return vert_ans_list
+
+    def find_climb(self):
+        """Wrapper class to find vertical climb along the Route.
+
+        Only returns the 'climb' component from find_vertical()
+        """
+        x = self.find_vertical()
+        asc = x[0]
+        return asc
+
+    def find_descent(self):
+        """Wrapper class to find vertical climb along the Route.
+
+        Only returns the 'descending' component from find_vertical()
+        """
+        x = self.find_vertical()
+        desc = x[1]
+        return desc
+
     def calc_metres_dist(self, next_segment=None):
         """
         Selects two adjacent pathways and finds the distance between them.
@@ -146,24 +175,26 @@ class Route(Segment):
             Using zip with the length of 'pathway-1' terminates the
             loops last 'segment' early - there is no 'next' at that point
             """
-            next_seg = self.pathway[i+1]
+            next_seg = self.retrieve_segment(i+1)
             if isinstance(seg, Route):
                 """
                 if seg is a Route, recurse and find that Routes distance
                 """
                 cumulative += seg.calc_metres_dist(None)
+                y = seg.retrieve_segment(len(seg.pathway)-1)
             else:
-                """
-                if next_seg is a Route, find its 1st waypoint
-                """
-                if isinstance(next_seg, Route):
-                    x = next_seg.pathway[0]
-                else:
-                    x = next_seg
-                cumulative += seg.calc_metres_dist(x)
+                y = seg
 
-        # Because float values are inprecise, rounding is necessary
-        cumulative = round(cumulative, 2)
+            """
+            if next_seg is a Route, find its 1st waypoint
+            """
+            if isinstance(next_seg, Route):
+                x = next_seg.retrieve_segment(0)
+            else:
+                x = next_seg
+
+            cumulative += y.calc_metres_dist(x)
+
         return cumulative
 
     def calc_metres_vertical(self, next_segment=None):
@@ -205,8 +236,5 @@ class Route(Segment):
             cumulative[0] += seg_vert[0]
             cumulative[1] += seg_vert[1]
 
-        # Because float values are inprecise, rounding is necessary
-        cumulative[0] = round(cumulative[0], 2)
-        cumulative[1] = round(cumulative[1], 2)
         return cumulative
 
