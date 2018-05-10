@@ -81,10 +81,11 @@ class RouteTestCase(unittest.TestCase):
             print(r1.__str__())
 
         r1.append_path(self.wp_1)
-        self.assertEqual(r1.__str__(),"Scorching_Summer A hot one!\n\t"
-                                      "-31.94,115.75,47.1,d1_1 is hilly\n\t"
-                                      "-31.94,115.75,55.3,d1_2 is slippery\n\t"
-                                      "-31.92,115.74,102.3")
+        self.assertEqual(
+            r1.__str__(), "Scorching_Summer A hot one!\n\t"
+                          "-31.94,115.75,47.1,d1_1 is hilly\n\t"
+                          "-31.94,115.75,55.3,d1_2 is slippery\n\t"
+                          "-31.92,115.74,102.3")
 
 # should it fail if you try to append after a Waypoint?
 

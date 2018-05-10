@@ -8,10 +8,6 @@ class StandardView:
         """Clears the screen to allow new info to be printed"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    def set_state(self, new_state):
-        """Updates the state of the view."""
-        pass
-
     def display_main_menu(self, in_directory):
         """The starting menu from which all courses of action sprout from.
         """
@@ -24,14 +20,7 @@ class StandardView:
             print("\t1. View current routes \n"
                   "\t2. Update routes \n"
                   "\t3. Exit\n")
-            # --------------------
-            # Put code here to print out all Directory route info
-            #   route name
-            #   route description
-            #   start and end coordinates
-            #   total distance (horizontal, climb, descent)
-            # --------------------
-            print("{}".format(in_directory.__str()))
+            print("{}".format(in_directory.__str__()))
             choice = int(input("> "))
         return choice
 
@@ -55,8 +44,20 @@ class StandardView:
         print("---------------------------------------------\n"
               "- - - - - - - - Tracking Mode - - - - - - - -\n"
               "---------------------------------------------\n\n")
-        print("\tCurrent Location: {}".format(in_tracker.curr_loc))
-        print("\tNext Waypoint: {}".format(in_tracker.next_waypoint))
-        print("\tRemaining distance: {} m".format(in_tracker.remaining[0]))
-        print("\tRemaining climb: {} m".format(in_tracker.remaining[1]))
-        print("\tRemaining descent: {} m".format(in_tracker.remaining[2]))
+        print("{}".format(in_tracker.__str__()))
+
+
+# print("\tCurrent Location: {}".format(in_tracker.curr_loc))
+# print("\tNext Waypoint: {}".format(in_tracker.next_waypoint))
+# print("\tRemaining distance: {} m".format(in_tracker.remaining[0]))
+# print("\tRemaining climb: {} m".format(in_tracker.remaining[1]))
+# print("\tRemaining descent: {} m".format(in_tracker.remaining[2]))
+
+
+# --------------------
+# Put code here to print out all Directory route info
+#   route name
+#   route description
+#   start and end coordinates
+#   total distance (horizontal, climb, descent)
+# --------------------
