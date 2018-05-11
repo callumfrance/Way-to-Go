@@ -2,7 +2,7 @@ from waypoint import Waypoint
 from route import Route
 
 
-class Tracker:
+class Tracker(GpsLocator):
     """
     Tracking <Route Name>
         Current location: <location>
@@ -17,6 +17,9 @@ class Tracker:
     """
 
     def __init__(self, in_route):
+        """Initiatialize the superclass GpsLocator (of which Tracker inherits)
+        """
+        GpsLocator.__init__()
         self.the_route = in_route
         self.curr_loc = in_route.retrieve_segment(0)
         self.next_wp = in_route.retrieve_segment(1)
