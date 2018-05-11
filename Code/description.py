@@ -6,7 +6,6 @@ Description
 
 from segment import Segment
 from waypoint import Waypoint
-from GeoUtils import GeoUtils
 
 
 class Description(Waypoint, Segment):
@@ -59,42 +58,3 @@ class Description(Waypoint, Segment):
             desc_str += ","
         return '{}{}'.format(desc_str, self._description)
 
-    def calc_metres_dist(self, next_segment=None):
-        """Calls GeoUtils for two points along a route.
-
-        Arguments:
-            next_segment : Segment
-                The other 'waypoint' value to find distance between.
-
-        Returns:
-            dist : float
-                Represents the distance on Earth between two horizontal points.
-        """
-        dist = 0.0
-        if next_segment is not None:
-            dist = GeoUtils.calcMetresDistance(self.latitude, self.longitude,
-                                                 next_segment.latitude,
-                                                 next_segment.longitude)
-        return dist
-
-    def calc_metres_vertical(self, next_segment=None):
-        """Determines if the segment is a climb or descent, returning the value.
-
-        Arguments:
-            next_segment : Segment
-                The other 'waypoint' value to find vertical distance between.
-
-        Returns:
-            seg_vert : float[2]
-                seg_vert[0] is the climb distance
-                seg_vert[1] is the descent distance
-                One value will always be 0 - only one can change per segment.
-        """
-        seg_vert = [0.0, 0.0]
-        if next_segment is not None:
-            x = next_segment.altitude - self.altitude
-            if x > 0.0:
-                seg_vert[0] = x
-            else:
-                seg_vert[1] = -x
-        return seg_vert

@@ -79,6 +79,30 @@ class WaypointTestCase(unittest.TestCase):
         self.assertEqual(self.wp_a.altitude, 55.5)
         print(self.wp_a)
 
+    def test_eq(self):
+        """Tests that two waypoints are close enough to be the same."""
+        # Two idential waypoints
+        self.assertTrue(self.wp_a.__eq__(Waypoint(33.3, 44.4, 55.5)))
+
+        # Two slightly non-identical waypoints horizontally
+        self.assertTrue(self.wp_a.__eq__(Waypoint(33.30008, 44.4, 55.5)))
+
+        # Two slightly non-identical waypoints horizontally
+        self.assertTrue(self.wp_a.__eq__(Waypoint(33.3, 44.40009, 55.5)))
+
+        # Two slightly non-identical waypoints vertically
+        self.assertTrue(self.wp_a.__eq__(Waypoint(33.3, 44.4, 57.5)))
+
+        # Two slightly non-identical waypoints vertically
+        self.assertTrue(self.wp_a.__eq__(Waypoint(33.3, 44.4, 53.5)))
+
+        # Two slightly non-idential waypoints
+        self.assertTrue(self.wp_a.__eq__(Waypoint(33.30003, 44.40004, 56.5)))
+
+        self.assertFalse(self.wp_a.__eq__(Waypoint(33.301, 44.4, 55.5)))
+        self.assertFalse(self.wp_a.__eq__(Waypoint(33.3, 44.401, 55.5)))
+        self.assertFalse(self.wp_a.__eq__(Waypoint(33.3, 44.401, 57.6)))
+
 
 if __name__ == '__main__':
     unittest.main()

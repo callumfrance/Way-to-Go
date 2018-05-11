@@ -72,7 +72,7 @@ class Route(Segment):
         """
         if isinstance(in_seg, list):
             self.extend_path(in_seg)
-        elif not self.valid_segment_check(in_seg):
+        elif not self.__valid_segment_check(in_seg):
             raise TypeError("Can only append Route/Description/Waypoint")
         else:
             self.pathway.append(in_seg)
@@ -80,7 +80,7 @@ class Route(Segment):
     def extend_path(self, in_multi_segs):
         """Adds multiple pathways to the Route"""
         for x in in_multi_segs:
-            if not self.valid_segment_check(x):
+            if not self.__valid_segment_check(x):
                 raise TypeError("Can only extend Route/Description/Waypoint")
         self.pathway.extend(in_multi_segs)
 
@@ -92,7 +92,7 @@ class Route(Segment):
         return self.pathway[pos]
 
     @staticmethod
-    def valid_segment_check(seg_to_check):
+    def __valid_segment_check(seg_to_check):
         """Static method to check if a segment is valid for the pathway.
 
         Parameters:
