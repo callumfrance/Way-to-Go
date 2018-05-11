@@ -5,7 +5,7 @@ class UI:
     """The original view class"""
 
     @staticmethod
-    def clear_screen():
+    def __clear_screen():
         """Clears the screen to allow new info to be printed"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -14,7 +14,7 @@ class UI:
         """
         choice = 10
         while choice != 1 or choice != 2 or choice != 3:
-            self.clear_screen()
+            self.__clear_screen()
             print("-----------------------------------------\n"
                   "- - - - - - - - Way-to-Go - - - - - - - -\n"
                   "-----------------------------------------\n\n")
@@ -32,7 +32,7 @@ class UI:
         """
         choice = 10
         while choice != 1 or choice != 2:
-            self.clear_screen()
+            self.__clear_screen()
             print("---------------------------------------------\n"
                 "- - - - - - - - Route View  - - - - - - - - -\n"
                 "---------------------------------------------\n\n")
@@ -47,7 +47,7 @@ class UI:
     def display_tracking(self, in_tracker):
         """The console output of the Tracking mode of the program.
         """
-        self.clear_screen()
+        self.__clear_screen()
         print("---------------------------------------------\n"
               "- - - - - - - - Tracking Mode - - - - - - - -\n"
               "---------------------------------------------\n\n")

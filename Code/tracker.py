@@ -50,14 +50,18 @@ class Tracker:
         out_string += "\tRemaining descent: " + self.remaining[2] + " m\n"
         return out_string
 
-    def calc_remaining(self):
+    def __calc_remaining(self):
         """Finds the remaining distance for the given route
         """
         pass
 
-    def close_enough(self):
+    def __close_enough(self):
         """Checks if the current location is within bounds to update
         the current waypoint.
         """
         pass
 
+    def locationReceived(self, in_lat, in_long, in_alt):
+        """Implementation of abstract class within GpsLocator.
+        """
+        pass

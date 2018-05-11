@@ -25,7 +25,6 @@ class DescriptionTestCase(unittest.TestCase):
             desc_c = Description(53.2, -23.5, "The well liked hike", "nope")
             print("desc_c is: {}".format(desc_c))
         desc_c = Description(33.3, 44.4, 55.5, "A morose mountain")
-        print("\ndesc_c is: " + desc_c.__str__())
         print("\nFinished test_constructor()\n")
 
     def test_calc_metres_dist(self):

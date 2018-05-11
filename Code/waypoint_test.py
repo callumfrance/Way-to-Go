@@ -30,18 +30,14 @@ class WaypointTestCase(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.wp_a.latitude = 131
             print(self.wp_a)
-        print(self.wp_a)
         with self.assertRaises(ValueError):
             self.wp_a.latitude = -90.01
             print(self.wp_a)
-        print(self.wp_a)
         with self.assertRaises(TypeError):
             self.wp_a.latitude = "elephant"
             print(self.wp_a)
-        print(self.wp_a)
         self.wp_a.latitude = -88.0
         self.assertEqual(self.wp_a.latitude, -88.0)
-        print(self.wp_a)
 
     def test_set_longitude(self):
         """Checks longitude validity."""
@@ -51,33 +47,26 @@ class WaypointTestCase(unittest.TestCase):
             self.wp_a.longitude = -300
         with self.assertRaises(TypeError):
             self.wp_a.longitude = "giraffe"
-        print(self.wp_a)
         self.wp_a.longitude = 0.0
         self.assertEqual(self.wp_a.longitude, 0)
-        print(self.wp_a)
         self.wp_a.longitude = -108.0
         self.assertEqual(self.wp_a.longitude, -108.0)
-        print(self.wp_a)
 
     def test_set_altitude(self):
         """Checks altitude validity."""
         with self.assertRaises(TypeError):
             self.wp_a.altitude = "hello world"
             print(self.wp_a)
-        print(self.wp_a)
         self.wp_a.altitude = -10000.0
         self.assertEqual(self.wp_a.altitude, -10000.0)
-        print(self.wp_a)
         self.wp_a.altitude = 5123.43
         self.assertEqual(self.wp_a.altitude, 5123.43)
-        print(self.wp_a)
 
     def test_waypoint(self):
         """Tests that a waypoint is correctly constructed."""
         self.assertEqual(self.wp_a.latitude, 33.3)
         self.assertEqual(self.wp_a.longitude, 44.4)
         self.assertEqual(self.wp_a.altitude, 55.5)
-        print(self.wp_a)
 
     def test_eq(self):
         """Tests that two waypoints are close enough to be the same."""
