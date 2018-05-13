@@ -32,11 +32,8 @@ class Controller():
         chosen_route = self.directory_model.retrieve_route_data(route_val)
         choice = self.view.display_one_route(chosen_route)
         if choice is 1:
-            # begin the route
-            pass
-        elif choice is 2:
-            # go back to main
-            self.main_menu()
+            # begin the route tracking
+            self.tracking(chosen_route)
 
-    def tracking(self):
+    def tracking(self, chosen_route):
         pass

@@ -12,7 +12,7 @@ class UI:
     def display_main_menu(self, in_directory):
         """The starting menu from which all courses of action sprout from.
         """
-        choice = 10
+        choice = 'F'
         pattern = ['a', 'A', 'b', 'B']
         # while choice is not A or B or any valid route_list number
         while choice not in pattern
@@ -36,16 +36,18 @@ class UI:
 
         Used to determine if a user wants to 'go' on this route.
         """
-        choice = 10
-        while choice != 1 or choice != 2:
+        choice = 'F'
+        self.__clear_screen()
+        while choice != 1 and choice != 2:
             self.__clear_screen()
             print("---------------------------------------------\n"
                 "- - - - - - - - Route View  - - - - - - - - -\n"
                 "---------------------------------------------\n\n")
             print("\t1. Begin route\n"
-                "\t2. Back\n\n")
+                  "\t2. Back\n\n")
             print("{}".format(in_route.__str__()))
             choice = int(input("\n> "))
+            self.__clear_screen()
             if choice != 1 or choice != 2:
                 print("\nPlease enter 1 to begin this route or 2 to go back\n")
         return choice
@@ -53,11 +55,22 @@ class UI:
     def display_tracking(self, in_tracker):
         """The console output of the Tracking mode of the program.
         """
+        choice = 'F'
+        finished_route = False
         self.__clear_screen()
-        print("---------------------------------------------\n"
-              "- - - - - - - - Tracking Mode - - - - - - - -\n"
-              "---------------------------------------------\n\n")
-        print("{}".format(in_tracker.__str__()))
+        while choice != 1 and choice != 2 or not finished_route:
+            print("---------------------------------------------\n"
+                "- - - - - - - - Tracking Mode - - - - - - - -\n"
+                "---------------------------------------------\n\n")
+            print("\t1. Manually complete this waypoint\n"
+                "\t2. Finish early\n\n")
+            print("{}".format(in_tracker.__str__()))
+            choice = int(input("\n> "))
+            self.__clear_screen()
+            if choice != 1 or choice != 2:
+                print("\nPlease enter 1 to manually complete waypoint"
+                      "or 2 to go back\n")
+            # condition to show that a route has been finished goes here
 
 
 # print("\tCurrent Location: {}".format(in_tracker.curr_loc))
