@@ -14,13 +14,13 @@ class UI:
         """
         choice = 10
         while choice != 1 or choice != 2 or choice != 3:
+        # while choice is not A or B or any valid route_list number
             self.__clear_screen()
             print("-----------------------------------------\n"
                   "- - - - - - - - Way-to-Go - - - - - - - -\n"
                   "-----------------------------------------\n\n")
-            print("\t1. View current routes \n"
-                  "\t2. Update routes \n"
-                  "\t3. Exit\n\n")
+            print("\tA. Update routes \n"
+                  "\tB. Exit\n\n")
             print("{}".format(in_directory.__str__()))
             choice = int(input("\n> "))
         return choice

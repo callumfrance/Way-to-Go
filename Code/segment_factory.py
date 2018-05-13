@@ -5,66 +5,88 @@ from waypoint import Waypoint
 
 class SegmentFactory:
 
+    def make_all_data(self, data):
+        new_routes = self.make_all_routes(data)
+        new_directory = self.make_all_segments(new_routes, data)
+        return new_directory
+
     def make_segment(self, data_line):
-        """Make either a description/waypoint or route based on format.
-        in_data : String
-            One of four forms:
-                case 1 - "<route_name> <route_description>"
-                or
-                case 2 - "<float>,<float>,<float>,*<route_name>"
-                or
-                case 3 - "<float>,<float>,<float>,<description>"
-                or
-                case 4 - "<float>,<float>,<float>"
+        pass
+
+    def make_all_segments(self, in_routes, in_data):
+        """Iterate through entire input data and make a directory.
+
+        Parameters:
+            in_routes : dict<Route>
         """
-        seg = None
+        pass
 
-        x = data_line.split(",")
-
-        if " " in x[0]:
-            """case 1
-            Must check if the route already exists first.
-            """
-            seg = Route(x[0], x[1:])
-            y = data_line.split(" ", 1)  # splits into two strings by the space
-        else:
-            try:
-                x[0] = float(x[0])
-                x[1] = float(x[1])
-                x[2] = float(x[2])
-            except TypeError as e:
-                raise TypeError("Must begin with 3 float coordinates")
-            if x[3] is None:
-                """case 4"""
-                seg = Waypoint(x[0], x[1], x[2])
-            elif x[3][1] is not "*":
-                """case 3"""
-                seg = Description(x[0], x[1], x[2], x[3])
-            else:
-                """case 2
-                Must check if the route already exists first.
-                """
-                seg = Route(x[3][1:], "")
-
-        return seg
+    def make_all_routes(self, data):
+        """Iterates through entire data input and creates all Route objects."""
+        route_dict = dict()
+        data_line = data.split("\n")
+        for x in data_line:
+            """Iterate through every line in the data"""
+            x = x.strip()
+            y.split(",")
+            if " " in y[0]:
+                """Identified a line to be a Route"""
+                x = x.split(" ")
+                route_dict[x[0]] = self.make_route(x)
+        return route_dict
 
     def make_route(self, data_line):
         """
-        Ideally this should be refactored so that make_segment() calls
-        make_route() instead of make_route() calling make_segment()
-
-        Parameters:
-            data_line : String
-                A line representing a route.
-                At this point in time, should only be of the format -
-                case 1 - "<route_name> <route_description>"
-
-                However in the future it could also take case 2
-
-        Returns:
-            new_route_obj : Route
+        data_line : String
+            "<route_name> <route_description>"
         """
-        new_route_obj = self.make_segment(data_line)
-        if not isinstance(new_route_obj, Route):
-            raise TypeError("A new Route should always be a Route object...")
-        return new_route_obj
+        entry = data_line.split(" ")
+        try:
+            new_route = Route(entry[0], entry[1])
+        except TypeError e:
+            pass
+        return new_route
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def make_segment(self, data_line):
+        """Make either a description/waypoint or route based on format.
+        data_line : String
+            One of three forms:
+                case 1 - "<float>,<float>,<float>,*<route_name>"
+                or
+                case 2 - "<float>,<float>,<float>,<description>"
+                or
+                case 3 - "<float>,<float>,<float>"
+        """
+        entry = data_line.split(",")
+        entry[0] = float(entry[0])
+        entry[1] = float(entry[1])
+        entry[2] = float(entry[2])
+
+        if len(entry) is 3:
+            """The data_line is the last one inside a given Route."""
+            new_segment = Description(entry[0], entry[1]
+        elif entry[3][0] is "*":
+            """The data_line is a sub-route"""
+            self.make_route(data_line)
+        else:
+            """The data_line is a Description object"""
+            new_segment = Description(entry[0], entry[1], entry[2], "END")
+
+        return new_segment

@@ -10,12 +10,13 @@ Two observers -
 
 """
 
+from segment_factory import SegmentFactory
 
 class Directory:
     """The contents of the entire model i.e. all the routes.
 
     Attributes:
-        route_list : dictionary of Routes
+        route_dict : dictionary of Routes
             A map of all the known routes.
             The key is each routes name.
 
@@ -33,7 +34,7 @@ class Directory:
 
         Initializes the dictionary and sets
         """
-        self.route_list = dict()  # a dictionary of all recorded routes
+        self.route_dict = dict()  # a dictionary of all recorded routes
         self.dir_wide_update_obs = set()
         self.single_route_retrieval_obs = set()
 
@@ -41,18 +42,24 @@ class Directory:
 # functionality code
 # ------------------
 
-    def update_directory(self, in_data):
-        """
-        [INCOMPLETE]
+   #  def update_directory(self, in_data):
+   #      """
+   #      [INCOMPLETE]
 
-        Calls the segment factory to create objects using input.
-        then notifies all dir_wide_update_obs
+   #      Calls the segment factory to create objects using input.
+   #      then notifies all dir_wide_update_obs
 
-        might also need to create another factory just to create routes
-        """
-        line_by_line = in_data.splitline()
-        for line in line_by_line:
-           """call the factory to make segments"""
+   #      """
+   #      line_by_line = in_data.splitline()
+   #      for line in line_by_line:
+   #         """call the factory to make segments"""
+   #         self.route_dict = SegmentFactory.make_all_data(in_data)
+
+   #      self.notify_dir_wide_update_obs()
+
+   def update_directory(self, in_data):
+       self.route_dict = SegmentFactory.make_all_data(in_data)
+       self.notify_dir_wide_update_obs()
 
     def retrieve_route_data(self, in_r_name):
         """The accessor method for an individual Route in the Directory.
@@ -65,19 +72,19 @@ class Directory:
             out_route : Route
                 The requested Route object
         """
-        out_route = self.route_list[in_r_name]
+        out_route = self.route_dict[in_r_name]
         self.notify_single_route_retrieval_obs()
         return out_route
 
     def __str__(self):
         out_string = ""
-        iter = 1
-        for key, value in self.route_list.items():
-            out_string += iter + ". " key + " " + value.r_desc + "\n"
+        counter = 1
+        for key, value in self.route_dict.items():
+            out_string += str(counter) + ". " + key + " " + value.r_desc + "\n"
             out_string += "\t" + value.retrieve_segment(0) + "\n"
             out_string += "\t" + value.retrieve_segment(len(value.pathway)-1)
             out_string += "\n\n"
-            iter += 1
+            counter += 1
         return out_string
 
 # -------------
