@@ -85,6 +85,8 @@ class Directory:
             out_string += "\t" + value.retrieve_segment(len(value.pathway)-1)
             out_string += "\n\n"
             counter += 1
+        if counter is 1:
+            out_string += "Directory is currently empty\n\n"
         return out_string
 
 # -------------

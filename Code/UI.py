@@ -13,8 +13,10 @@ class UI:
         """The starting menu from which all courses of action sprout from.
         """
         choice = 10
-        while choice != 1 or choice != 2 or choice != 3:
+        pattern = ['a', 'A', 'b', 'B']
         # while choice is not A or B or any valid route_list number
+        while choice not in pattern
+                or not 1 <= choice <= len(in_directory.route_dict):
             self.__clear_screen()
             print("-----------------------------------------\n"
                   "- - - - - - - - Way-to-Go - - - - - - - -\n"
@@ -22,7 +24,11 @@ class UI:
             print("\tA. Update routes \n"
                   "\tB. Exit\n\n")
             print("{}".format(in_directory.__str__()))
-            choice = int(input("\n> "))
+            try:
+                """Check if user has entered a number or not"""
+                choice = int(input("\n> "))
+            except ValueError e:
+                choice = input("\n> ")
         return choice
 
     def display_one_route(self, in_route):

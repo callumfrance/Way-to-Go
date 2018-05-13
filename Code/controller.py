@@ -12,16 +12,17 @@ class Controller():
         # tracker model requires an input route...
 
     def main_menu(self):
-        choice = self.view.display_main_menu()
-        if choice is 'A':
-            self.update_routes()
-        elif choice is 'B':
-            # exit
-            pass
-        else:
-            # user has selected a route
-            self.route_selected(choice)
-            pass
+        selected_exit = False
+        while not selected_exit:
+            choice = self.view.display_main_menu(self.directory_model)
+            if choice is 'A':
+                self.update_routes()
+            elif choice is 'B':
+                # exit
+                selected_exit = True
+            else:
+                # user has selected a route
+                self.route_selected(choice)
 
     def update_routes(self):
         in_data = retrieveRouteData()
