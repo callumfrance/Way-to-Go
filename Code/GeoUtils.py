@@ -7,7 +7,7 @@ A stub used in order to implement Way-to-Go
 # Author: Callum France
 
 from math import radians, sin, cos, acos
-import data
+from data import test1
 
 
 class GeoUtils(object):
