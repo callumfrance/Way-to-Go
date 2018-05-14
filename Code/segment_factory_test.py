@@ -6,7 +6,7 @@ segment_factory_test.py
 
 from segment_factory import SegmentFactory
 import unittest
-import data
+import data # contains the big input string given in the Assignment sheet
 
 
 class SegmentFactoryTest(unittest.TestCase):
@@ -14,27 +14,16 @@ class SegmentFactoryTest(unittest.TestCase):
     def setUp(self):
        self.seg_fact = SegmentFactory()
 
-    # def test_make_route(self):
-    #     r1 = SegmentFactory._make_route("")
-    #     self.assertEquals(r1.__str__(), """answer""")
-
-    # def test_make_segment(self):
-    #     s1 = SegmentFactory._make_segment("")
-    #     self.assertEquals(s1.__str__(), """answer""")
-
-    # def make_all_routes(self):
-    #     pass
-
-    # def make_all_segments(self):
-    #     pass
-
     def test_make_all_data(self):
         print("test_make_all_data: \n")
+
         test_dict_1 = self.seg_fact.make_all_data(data.test1)
-        print("hello" + str(test_dict_1))
+        # self.assertEquals(test_dict_1, """big fucking thing here""")
+        print(str(test_dict_1))
 
 
 if __name__ == '__main__':
+    """Tells console to run this file as a unit test."""
     unittest.main()
 
 # Run the following in the shell:

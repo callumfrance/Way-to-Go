@@ -1,4 +1,6 @@
 import os
+from dir_update_observer import DirUpdateObserver
+from dir_route_retrieve_observer import DirRouteRetrieveObserver
 
 
 class UI:
@@ -12,6 +14,11 @@ class UI:
     def display_main_menu(self, in_directory):
         """The starting menu from which all courses of action sprout from.
         """
+
+        # create a new observer for Directory updates
+        concrete_dir_update_ob = DirUpdateObserverImpl()
+        in_directory.add_dir_wide_update_ob(concrete_dir_update_ob)
+
         choice = 'F'
         pattern = ['a', 'A', 'b', 'B']
         # while choice is not A or B or any valid route_list number
@@ -29,6 +36,9 @@ class UI:
                 choice = int(input("\n> "))
             except ValueError e:
                 choice = input("\n> ")
+
+        in_directory.rem_dir_wide_update_ob(concrete_dir_update_ob)
+
         return choice
 
     def display_one_route(self, in_route):
@@ -36,6 +46,11 @@ class UI:
 
         Used to determine if a user wants to 'go' on this route.
         """
+
+        # create a new observer for single route getter updates
+        concrete_r_r_ob = DirRouteRetrieveObserver()
+        in_directory.add_single_route_retrieval_ob(concrete_r_r_ob)
+
         choice = 'F'
         self.__clear_screen()
         while choice != 1 and choice != 2:
@@ -71,6 +86,15 @@ class UI:
                 print("\nPlease enter 1 to manually complete waypoint"
                       "or 2 to go back\n")
             # condition to show that a route has been finished goes here
+
+
+    class DirUpdateObserverImpl(DirUpdateObserver):
+        """Nested concrete observer class for Directory updates."""
+
+        def dir_update(self, arg):
+            """Calls the main menu again with the new Directory fields."""
+            self.display_main_menu(arg)
+
 
 
 # print("\tCurrent Location: {}".format(in_tracker.curr_loc))

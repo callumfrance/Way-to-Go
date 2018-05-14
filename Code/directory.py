@@ -12,6 +12,7 @@ Two observers -
 
 from segment_factory import SegmentFactory
 
+
 class Directory:
     """The contents of the entire model i.e. all the routes.
 
@@ -38,28 +39,13 @@ class Directory:
         self.dir_wide_update_obs = set()
         self.single_route_retrieval_obs = set()
 
-# ------------------
-# functionality code
-# ------------------
-
-   #  def update_directory(self, in_data):
-   #      """
-   #      [INCOMPLETE]
-
-   #      Calls the segment factory to create objects using input.
-   #      then notifies all dir_wide_update_obs
-
-   #      """
-   #      line_by_line = in_data.splitline()
-   #      for line in line_by_line:
-   #         """call the factory to make segments"""
-   #         self.route_dict = SegmentFactory.make_all_data(in_data)
-
-   #      self.notify_dir_wide_update_obs()
-
-   def update_directory(self, in_data):
-       self.route_dict = SegmentFactory.make_all_data(in_data)
-       self.notify_dir_wide_update_obs()
+    # ------------------
+    # functionality code
+    # ------------------
+    def update_directory(self, in_data):
+        seg_fact = SegmentFactory()
+        self.route_dict = seg_fact.make_all_data(in_data)
+        self.notify_dir_wide_update_obs()
 
     def retrieve_route_data(self, in_r_name):
         """The accessor method for an individual Route in the Directory.
@@ -73,7 +59,7 @@ class Directory:
                 The requested Route object
         """
         out_route = self.route_dict[in_r_name]
-        self.notify_single_route_retrieval_obs()
+        self.notify_single_route_retrieval_obs(out_route)
         return out_route
 
     def __str__(self):
@@ -110,11 +96,10 @@ class Directory:
 
     def notify_dir_wide_update_obs(self):
         """
-        [INCOMPLETE]
         Will iterate through all observers and call relevant update code
         """
         for o in self.dir_wide_update_obs:
-            o.update("""stuff to do with Concrete observer""")
+            o.update(self.route_dict)
 
     def add_single_route_retrieval_ob(self, observer):
         """Adds a new observer to the set of observers"""
@@ -131,12 +116,9 @@ class Directory:
             # should I raise an issue?
             pass
 
-    def notify_single_route_retrieval_obs(self):
+    def notify_single_route_retrieval_obs(self, out_route):
         """
-        [INCOMPLETE]
-
         Will iterate through all observers and call relevant update code
         """
         for o in self.single_route_retrieval_obs:
-            o.update("""stuff to do with Concrete observer""")
-
+            o.update(out_route)
