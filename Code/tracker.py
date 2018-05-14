@@ -68,18 +68,3 @@ class Tracker(GpsLocator):
         """Implementation of abstract class within GpsLocator.
         """
         pass
-
-#     class DirRouteRetrieveObserverImpl(DirRouteRetrieveObserver):
-#         """Concrete inner class representation of DirRouteRetrieveObserver
-#         """
-#
-#         def update(self, arg):
-#             """Updates tracker with the correct Route it is based on."""
-#             self.the_route = arg
-#             self.curr_loc = arg.retrieve_segment(0)
-#             self.next_wp = arg.retrieve_segment(1)
-#             self.remaining = self.calc_remaining(curr_loc)
-#
-#     def tear_down(self):
-#         """Called when Tracker is no longer being used."""
-#

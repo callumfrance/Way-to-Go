@@ -11,19 +11,25 @@ class UI:
         """Clears the screen to allow new info to be printed"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    def display_main_menu(self, in_directory):
-        """The starting menu from which all courses of action sprout from.
-        """
-
+    def main_menu_wrapper(self, in_directory):
         # create a new observer for Directory updates
         concrete_dir_update_ob = DirUpdateObserverImpl()
         in_directory.add_dir_wide_update_ob(concrete_dir_update_ob)
 
+        choice = self._display_main_menu()
+
+        in_directory.rem_dir_wide_update_ob(concrete_dir_update_ob)
+        return choice
+
+    def _display_main_menu(self, in_directory):
+        valid_route_select = False
         choice = 'F'
         pattern = ['a', 'A', 'b', 'B']
+
         # while choice is not A or B or any valid route_list number
         while choice not in pattern
-                or not 1 <= choice <= len(in_directory.route_dict):
+                and not valid_route_select:
+
             self.__clear_screen()
             print("-----------------------------------------\n"
                   "- - - - - - - - Way-to-Go - - - - - - - -\n"
@@ -31,13 +37,13 @@ class UI:
             print("\tA. Update routes \n"
                   "\tB. Exit\n\n")
             print("{}".format(in_directory.__str__()))
-            try:
-                """Check if user has entered a number or not"""
-                choice = int(input("\n> "))
-            except ValueError e:
-                choice = input("\n> ")
+            choice = input("\n> ")
 
-        in_directory.rem_dir_wide_update_ob(concrete_dir_update_ob)
+            if choice.isdigit() and choice > 0:
+                """Check if user has entered an appropraite number or not"""
+                choice = int(choice)
+                if 1 <= choice < len(in_directory.route_dict):
+                    valid_route_select = True
 
         return choice
 
@@ -89,7 +95,7 @@ class UI:
 
         def dir_update(self, arg):
             """Calls the main menu again with the new Directory fields."""
-            self.display_main_menu(arg)
+            self._display_main_menu(arg)
 
 
 

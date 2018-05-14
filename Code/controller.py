@@ -14,7 +14,7 @@ class Controller():
     def main_menu(self):
         selected_exit = False
         while not selected_exit:
-            choice = self.view.display_main_menu(self.directory_model)
+            choice = self.view.main_menu_wrapper(self.directory_model)
             if choice is 'A':
                 self.update_routes()
             elif choice is 'B':
