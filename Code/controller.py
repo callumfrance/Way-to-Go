@@ -1,5 +1,6 @@
-from GeoUtils import retrieveRouteData
+from GeoUtils import GeoUtils
 from directory import Directory
+from segment_factory import SegmentFactory
 from tracker import Tracker
 from UI import UI
 
@@ -8,6 +9,7 @@ class Controller():
     def __init__(self):
         self.view = UI()
         self.directory_model = Directory()
+        self.seg_fact = SegmentFactory()
         # self.tracker_model = Tracker()
         # tracker model requires an input route...
 
@@ -25,8 +27,8 @@ class Controller():
                 self.route_selected(choice)
 
     def update_routes(self):
-        in_data = retrieveRouteData()
-        self.directory_model.update_directory(in_data)
+        in_data = GeoUtils.retrieveRouteData()
+        self.directory_model.update_directory(in_data, self.seg_fact)
 
     def route_selected(self, route_val):
         chosen_route = self.directory_model.retrieve_route_data(route_val)

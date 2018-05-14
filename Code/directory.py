@@ -42,8 +42,11 @@ class Directory:
     # ------------------
     # functionality code
     # ------------------
-    def update_directory(self, in_data):
-        seg_fact = SegmentFactory()
+    def update_directory(self, in_data, in_seg_fact):
+        """Segment factory is a parameter because this utilizes
+        dependency injection, and makes the code more testable.
+        """
+        seg_fact = in_seg_fact
         self.route_dict = seg_fact.make_all_data(in_data)
         self.notify_dir_wide_update_obs()
 
@@ -59,7 +62,6 @@ class Directory:
                 The requested Route object
         """
         out_route = self.route_dict[in_r_name]
-        self.notify_single_route_retrieval_obs(out_route)
         return out_route
 
     def __str__(self):
@@ -86,7 +88,7 @@ class Directory:
     def rem_dir_wide_update_ob(self, observer):
         """Will remove observer from set only if it was present.
         Will do nothing if observer was never in there.
-        ( use .remove() instead if an error needs to be raised)
+        (use .remove() instead if an error needs to be raised)
         """
         try:
             self.dir_wide_update_obs.discard(observer)
@@ -100,4 +102,3 @@ class Directory:
         """
         for o in self.dir_wide_update_obs:
             o.update(self.route_dict)
-
