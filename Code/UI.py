@@ -47,10 +47,6 @@ class UI:
         Used to determine if a user wants to 'go' on this route.
         """
 
-        # create a new observer for single route getter updates
-        concrete_r_r_ob = DirRouteRetrieveObserver()
-        in_directory.add_single_route_retrieval_ob(concrete_r_r_ob)
-
         choice = 'F'
         self.__clear_screen()
         while choice != 1 and choice != 2:

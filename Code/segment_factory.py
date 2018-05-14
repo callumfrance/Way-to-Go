@@ -4,6 +4,13 @@ from description import Description
 
 class SegmentFactory:
 
+    def __init__(self):
+        self.test_loader = None
+
+    def set_test_loader(self, t1):
+        """Allows test values to be passed through this factory."""
+        self.test_loader = t1
+
     def make_all_data(self, data):
         """The only public method - makes populate route_dictionary.
 
@@ -16,9 +23,12 @@ class SegmentFactory:
             new_directory : dict<Route>
                 A populated dictionary of Routes containing segments.
         """
-        data_lines = data.split("\n")
-        new_routes = self._make_all_routes(data_lines)
-        new_directory = self._make_all_segments(new_routes, data_lines)
+        if self.test_loader is not None:
+            new_directory = self.test_loader
+        else:
+            data_lines = data.split("\n")
+            new_routes = self._make_all_routes(data_lines)
+            new_directory = self._make_all_segments(new_routes, data_lines)
         return new_directory
 
     def _make_all_routes(self, data_lines):
