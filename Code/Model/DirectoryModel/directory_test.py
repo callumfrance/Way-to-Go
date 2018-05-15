@@ -4,10 +4,10 @@ directory_test.py
 
 # Author: Callum France
 
-from description import Description
-from directory import Directory
-from route import Route
-from segment_factory import SegmentFactory
+from .description import Description
+from .directory import Directory
+from .route import Route
+from .segment_factory import SegmentFactory
 import unittest
 from unittest.mock import patch, Mock
 

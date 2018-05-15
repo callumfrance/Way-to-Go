@@ -1,12 +1,16 @@
 """
 route_test.py
+
+navigate to the root directory of this project in the console
+Run the following in the console
+      python -m Model.DirectoryModel.waypoint_test
 """
 
 # Author: Callum France
 import unittest
-from description import Description
-from route import Route
-from waypoint import Waypoint
+from .description import Description
+from .route import Route
+from .waypoint import Waypoint
 
 
 class RouteTestCase(unittest.TestCase):
@@ -93,18 +97,18 @@ class RouteTestCase(unittest.TestCase):
         """Tests adding multiple Segments to self.pathway"""
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.extend_path([self.d1_1, self.d1_2, self.d1_3])
-        self.assertEqual(r1.__str__(),"Scorching_Summer A hot one!\n\t"
-                                      "-31.94,115.75,47.1,d1_1 is hilly\n\t"
-                                      "-31.94,115.75,55.3,d1_2 is slippery\n\t"
-                                      "-31.94,115.75,71.0,d1_3 is rocky")
+        self.assertEqual(r1.__str__(), "Scorching_Summer A hot one!\n\t"
+                                       "-31.94,115.75,47.1,d1_1 is hilly\n\t"
+                                       "-31.94,115.75,55.3,d1_2 is slippery\n\t"
+                                       "-31.94,115.75,71.0,d1_3 is rocky")
         del r1
 
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.append_path([self.d1_1, self.d1_2, self.d1_3])
-        self.assertEqual(r1.__str__(),"Scorching_Summer A hot one!\n\t"
-                                      "-31.94,115.75,47.1,d1_1 is hilly\n\t"
-                                      "-31.94,115.75,55.3,d1_2 is slippery\n\t"
-                                      "-31.94,115.75,71.0,d1_3 is rocky")
+        self.assertEqual(r1.__str__(), "Scorching_Summer A hot one!\n\t"
+                                       "-31.94,115.75,47.1,d1_1 is hilly\n\t"
+                                       "-31.94,115.75,55.3,d1_2 is slippery\n\t"
+                                       "-31.94,115.75,71.0,d1_3 is rocky")
 
 # also add a Route to a Route
 
@@ -144,9 +148,9 @@ class RouteTestCase(unittest.TestCase):
 # also do an example of a route within a route
 
 
-
 if __name__ == '__main__':
     unittest.main()
 
-# Run the following in the shell:
-#    python route_test.py -v
+# navigate to the root directory of this project in the console
+# Run the following in the console
+#       python -m Model.DirectoryModel.route_test

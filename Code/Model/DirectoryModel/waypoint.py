@@ -3,6 +3,9 @@ Waypoint
 """
 
 # Author: Callum France
+import sys
+
+sys.path.append('../..')
 
 from GeoUtils import GeoUtils
 

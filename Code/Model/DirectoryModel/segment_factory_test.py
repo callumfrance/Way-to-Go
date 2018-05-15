@@ -1,18 +1,22 @@
 """
 segment_factory_test.py
+
+navigate to the root directory of this project in the console
+Run the following in the console
+      python -m Model.DirectoryModel.segment_factory_test
 """
 
 # Author: Callum France
 
-from segment_factory import SegmentFactory
+from .segment_factory import SegmentFactory
 import unittest
-import data # contains the big input string given in the Assignment sheet
+import data  # contains the big input string given in the Assignment sheet
 
 
 class SegmentFactoryTest(unittest.TestCase):
 
     def setUp(self):
-       self.seg_fact = SegmentFactory()
+        self.seg_fact = SegmentFactory()
 
     def test_make_all_data(self):
         print("test_make_all_data: \n")
@@ -26,5 +30,6 @@ if __name__ == '__main__':
     """Tells console to run this file as a unit test."""
     unittest.main()
 
-# Run the following in the shell:
-#    python segment_factory_test.py -v
+# navigate to the root directory of this project in the console
+# Run the following in the console
+#       python -m Model.DirectoryModel.segment_factory_test

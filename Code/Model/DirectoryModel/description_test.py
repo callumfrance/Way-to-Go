@@ -1,11 +1,16 @@
 """
 description_test
+
+navigate to the root directory of this project in the console
+Run the following in the console
+      python -m Model.DirectoryModel.description_test
+
 """
 
 # Author: Callum France
 
 import unittest
-from description import Description
+from .description import Description
 
 
 class DescriptionTestCase(unittest.TestCase):
@@ -60,5 +65,6 @@ class DescriptionTestCase(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-# Run the following in the shell:
-#    python description_test.py -v
+# navigate to the root directory of this project in the console
+# Run the following in the console
+#       python -m Model.DirectoryModel.description_test

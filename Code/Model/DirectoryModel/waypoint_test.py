@@ -1,10 +1,15 @@
 """
 waypoint_test
 
-Author: Callum France
+navigate to the root directory of this project in the console
+Run the following in the console
+      python -m Model.DirectoryModel.waypoint_test
 """
+
+# Author: Callum France
+
 import unittest
-from waypoint import Waypoint
+from .waypoint import Waypoint
 
 
 class WaypointTestCase(unittest.TestCase):
@@ -96,5 +101,6 @@ class WaypointTestCase(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-# Run the following in the shell:
-#    python waypoint_test.py -v
+# navigate to the root directory of this project in the console
+# Run the following in the console
+#       python -m Model.DirectoryModel.waypoint_test
