@@ -1,4 +1,5 @@
 import os
+from tracker_change_observer import TrackerChangeObserver
 from dir_update_observer import DirUpdateObserver
 
 
@@ -30,10 +31,10 @@ class UI:
         valid_route_select = False
         choice = 'F'
         pattern = ['a', 'A', 'b', 'B']
+        UI.__clear_screen()
 
         # while choice is not A or B or any valid route_list number
         while choice not in pattern and not valid_route_select:
-            UI.__clear_screen()
             print("-----------------------------------------\n"
                   "- - - - - - - - Way-to-Go - - - - - - - -\n"
                   "-----------------------------------------\n\n")
@@ -41,12 +42,15 @@ class UI:
                   "\tB. Exit\n\n")
             print("{}".format(in_directory.__str__()))
             choice = input("\n> ")
+            UI.__clear_screen()
 
             if choice.isdigit() and int(choice) > 0:
                 """Check if user has entered an appropriate number or not"""
                 choice = int(choice)
                 if 1 <= choice < len(in_directory.route_dict):
                     valid_route_select = True
+            if not valid_route_select:
+                print("Please select a valid route number, update, or exit.\n")
         return choice
 
     def display_one_route(self, in_route):
@@ -71,13 +75,28 @@ class UI:
                 print("\nPlease enter 1 to begin this route or 2 to go back\n")
         return choice
 
-    def display_tracking(self, in_tracker):
-        """The console output of the Tracking mode of the program.
-        """
+    def tracking_wrapper(self, in_tracker):
+        class TrackerChangeObserverImpl(TrackerChangeObserver):
+            def tracker_update(self, arg):
+                UI._display_tracking(arg)
+
+        concrete_track_ob = TrackerChangeObserverImpl()
+        in_tracker.add_track_ob(concrete_track_ob)
+
+        self._display_tracking(in_tracker)
+
+        # stops displaying tracking mode once finished the route
+        # therefore this is where the observer should be removed
+        in_tracker.rem_curr_loc_ob(concrete_curr_loc_ob)
+
+    @staticmethod
+    def _display_tracking(in_tracker):
         choice = 'F'
-        finished_route = False
-        self.__clear_screen()
-        while choice != 1 and choice != 2 or not finished_route:
+        UI.__clear_screen()
+        # needs to determine if the user has reached the end point
+        finished_route = in_tracker.has_finished()
+
+        while choice != 2 or not finished_route:
             print("---------------------------------------------\n"
                   "- - - - - - - - Tracking Mode - - - - - - - -\n"
                   "---------------------------------------------\n\n")
@@ -85,8 +104,12 @@ class UI:
                   "\t2. Finish early\n\n")
             print("{}".format(in_tracker.__str__()))
             choice = int(input("\n> "))
-            self.__clear_screen()
-            if choice != 1 or choice != 2:
+            UI.__clear_screen()
+
+            if choice is 1:
+                """Updates Tracker, which triggers its observer."""
+                in_tracker.manually_complete_waypoint()
+            elif choice is not 2:
                 print("\nPlease enter 1 to manually complete waypoint"
                       "or 2 to go back\n")
             # condition to show that a route has been finished goes here
