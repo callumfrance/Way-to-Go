@@ -1,8 +1,12 @@
+import sys
 from GeoUtils import GeoUtils
-from directory import Directory
-from segment_factory import SegmentFactory
-from tracker import Tracker
-from UI import UI
+
+sys.path.append('../')
+
+from Model.DirectoryModel import Directory
+from Model.DirectoryModel import SegmentFactory
+from Model.TrackerModel import Tracker
+from View.UI import UI
 
 
 class Controller():
@@ -35,7 +39,7 @@ class Controller():
         choice = self.view.display_one_route(chosen_route)
         if choice is 1:
             # begin the route tracking
-            self.tracking(chosen_route)
+            Tracker(route_val)
 
     def tracking(self, chosen_route):
         pass

@@ -4,11 +4,10 @@ Description
 
 # Author: Callum France
 
-from segment import Segment
-from waypoint import Waypoint
+from .waypoint import Waypoint
 
 
-class Description(Waypoint, Segment):
+class Description(Waypoint):
     """
     A description is the leaf node in the Segment composite pattern.
 
@@ -28,9 +27,9 @@ class Description(Waypoint, Segment):
             Waypoint.__init__(self, in_lat, in_long, in_alt)
             self.description = in_desc
             # print("\nDescription is: {}".format(self.description))
-        except TypeError as e:
+        except TypeError:
             raise TypeError("Description inputs are not correct data types")
-        except ValueError as e:
+        except ValueError:
             raise ValueError("Description inputs are correctly typed but not"
                              "allowed")
 
@@ -57,4 +56,3 @@ class Description(Waypoint, Segment):
         if self._description is not "":
             desc_str += ","
         return '{}{}'.format(desc_str, self._description)
-

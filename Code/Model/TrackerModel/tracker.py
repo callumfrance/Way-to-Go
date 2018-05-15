@@ -1,10 +1,10 @@
+from ..DirectoryModel.waypoint import Waypoint
+from ..DirectoryModel.route import Route
 import sys
 
 # GpsLocator is in the root folder so we must change the path to get access
 sys.path.append('../../')
 
-from ..DirectoryModel.waypoint import Waypoint
-from ..DirectoryModel.route import Route
 from GpsLocator import GpsLocator
 
 
@@ -29,7 +29,7 @@ class Tracker(GpsLocator):
         self.the_route = in_route
         self.curr_loc = in_route.retrieve_segment(0)
         self.next_wp = in_route.retrieve_segment(1)
-        self.remaining = self.calc_remaining(self.curr_loc)
+        self.remaining = self.calc_remaining(self.curr_loc) #must write this
 
     @property
     def curr_loc(self):

@@ -1,5 +1,5 @@
-from route import Route
-from description import Description
+from .route import Route
+from .description import Description
 
 
 class SegmentFactory:

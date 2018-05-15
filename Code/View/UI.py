@@ -1,6 +1,10 @@
+import sys
 import os
-from .tracker_change_observer import TrackerChangeObserver
-from .dir_update_observer import DirUpdateObserver
+
+sys.path.append('../')
+
+from Model.TrackerModel.tracker_change_observer import TrackerChangeObserver
+from Model.DirectoryModel.dir_update_observer import DirUpdateObserver
 
 
 class UI:
@@ -87,7 +91,7 @@ class UI:
 
         # stops displaying tracking mode once finished the route
         # therefore this is where the observer should be removed
-        in_tracker.rem_curr_loc_ob(concrete_curr_loc_ob)
+        in_tracker.rem_curr_loc_ob(concrete_track_ob)
 
     @staticmethod
     def _display_tracking(in_tracker):

@@ -2,14 +2,13 @@
 Route
 """
 import re
-from segment import Segment
-from description import Description
-from waypoint import Waypoint
+from .description import Description
+from .waypoint import Waypoint
 
 
-class Route(Segment):
+class Route:
     """
-    A route is a collection of joined waypoints with descriptions.
+    A route is a collection of joined waypoint's with descriptions.
 
     Attributes:
         r_name: the name of the route (only contains [a-zA-Z0-9_])
@@ -237,4 +236,3 @@ class Route(Segment):
             cumulative[1] += seg_vert[1]
 
         return cumulative
-

@@ -10,8 +10,6 @@ Two observers -
 
 """
 
-from segment_factory import SegmentFactory
-
 
 class Directory:
     """The contents of the entire model i.e. all the routes.

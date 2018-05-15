@@ -6,6 +6,7 @@ Waypoint
 
 from GeoUtils import GeoUtils
 
+
 class Waypoint:
     """A known point within a given Route.
 
@@ -64,6 +65,7 @@ class Waypoint:
         if not isinstance(in_altitude, float):
             raise TypeError("Altitude must be a float")
         self._altitude = in_altitude
+
     def calc_metres_dist(self, next_segment=None):
         """Calls GeoUtils for two points along a route.
 
