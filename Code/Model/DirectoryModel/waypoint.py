@@ -87,6 +87,13 @@ class Waypoint:
                                                next_segment.longitude)
         return dist
 
+    def calc_metres_ascent(self, next_segment)
+        return (self.calc_metres_vertical())[0]
+
+    def calc_metres_descent(self, next_segment)
+        return (self.calc_metres_vertical())[1]
+
+
     def calc_metres_vertical(self, next_segment=None):
         """Determines if the segment is a climb or descent, returning the value.
 

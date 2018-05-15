@@ -107,11 +107,17 @@ class Route:
             is_valid = True
         return is_valid
 
-# -----------------------------------------------------------------------------
-# write a to_list() method to decrease coupling -
-#     i.e. it will mean you dont have to recurse routes outside this class
-#     too much
-# -----------------------------------------------------------------------------
+    def gather_all_waypoints(self):
+        """A method that recurses through the Route and returns every waypoint
+        included either directly in this Route, or inside a sub-route.
+        """
+        all_wp = list()
+        for x in self.pathway:
+            if isinstance(x, Waypoint):
+                all_wp.append(x)
+            else:  # must be a sub-Route
+                all_wp.extend(x.gather_all_waypoints())
+        return all_wp
 
     def __str__(self):
         route_str = self.r_name + " " + self.r_desc

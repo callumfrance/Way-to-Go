@@ -22,10 +22,6 @@ class Directory:
         dir_wide_update_obs : set of observers
             The collection of observers that want to know when an update
             is made to the Directory
-
-        single_route_retrieval_obs : set of observers
-            The collection of observers that want to know when a
-            specific Route's information is accessed
     """
 
     def __init__(self):
@@ -35,7 +31,6 @@ class Directory:
         """
         self.route_dict = dict()  # a dictionary of all recorded routes
         self.dir_wide_update_obs = set()
-        self.single_route_retrieval_obs = set()
 
     # ------------------
     # functionality code

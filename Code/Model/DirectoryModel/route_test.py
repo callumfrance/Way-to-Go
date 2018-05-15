@@ -3,7 +3,7 @@ route_test.py
 
 navigate to the root directory of this project in the console
 Run the following in the console
-      python -m Model.DirectoryModel.waypoint_test
+      python -m Model.DirectoryModel.route_test
 """
 
 # Author: Callum France
