@@ -1,13 +1,13 @@
 import abc
 
 
-class DirUpdateObserver(metaclass=abc.ABCMeta):
+class TrackerChangeObserver(metaclass=abc.ABCMeta):
 
     def __init__(self):
-        self.route_dict = None
+        self.tracking = None
         self.observer_state = None
 
     @abc.abstractmethod
-    def dir_update(self, arg):
+    def tracker_update(self, arg):
         """Implemented in the concrete observer class."""
         pass

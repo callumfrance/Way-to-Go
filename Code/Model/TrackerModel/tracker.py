@@ -1,5 +1,11 @@
-from waypoint import Waypoint
-from route import Route
+import sys
+
+# GpsLocator is in the root folder so we must change the path to get access
+sys.path.append('../../')
+
+from ..DirectoryModel.waypoint import Waypoint
+from ..DirectoryModel.route import Route
+from GpsLocator import GpsLocator
 
 
 class Tracker(GpsLocator):
@@ -17,17 +23,22 @@ class Tracker(GpsLocator):
     """
 
     def __init__(self, in_route):
-        """Initiatialize the superclass GpsLocator (of which Tracker inherits)
+        """Initialize the superclass GpsLocator (of which Tracker inherits)
         """
-        GpsLocator.__init__()
+        GpsLocator.__init__(self)
         self.the_route = in_route
         self.curr_loc = in_route.retrieve_segment(0)
         self.next_wp = in_route.retrieve_segment(1)
-        self.remaining = self.calc_remaining(curr_loc)
+        self.remaining = self.calc_remaining(self.curr_loc)
 
     @property
     def curr_loc(self):
         return self._curr_loc
+
+    @curr_loc.setter
+    def curr_loc(self, in_curr_loc):
+        if isinstance(in_curr_loc, Waypoint):
+            self.curr_loc = in_curr_loc
 
     @property
     def the_route(self):
@@ -35,14 +46,27 @@ class Tracker(GpsLocator):
 
     @the_route.setter
     def the_route(self, in_route):
+        if isinstance(in_route, Route):
+            self._the_route = in_route
+
+    @property
+    def next_wp(self):
+        return self._next_wp
+
+    @next_wp.setter
+    def next_wp(self, in_next_wp):
+        if isinstance(in_next_wp, Waypoint):
+            self._next_wp = in_next_wp
 
     @property
     def remaining(self):
         return self._remaining
 
-    @property
-    def next_wp(self):
-        return self._next_wp
+    @remaining.setter
+    def remaining(self, in_remaining):
+        if isinstance(in_remaining, list):
+            if len(in_remaining) is 3:
+                self._remaining = in_remaining
 
     def __str__(self):
         out_string = ""

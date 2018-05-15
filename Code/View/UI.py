@@ -1,6 +1,6 @@
 import os
-from tracker_change_observer import TrackerChangeObserver
-from dir_update_observer import DirUpdateObserver
+from .tracker_change_observer import TrackerChangeObserver
+from .dir_update_observer import DirUpdateObserver
 
 
 class UI:
