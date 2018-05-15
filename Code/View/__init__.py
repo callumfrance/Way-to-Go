@@ -1,2 +1,7 @@
-from dir_update_observer import DirUpdateObserver
-from UI import UI
+__all__ = [
+    'UI',
+    'dir_update_observer',
+]
+
+from .UI import UI
+from .dir_update_observer import DirUpdateObserver

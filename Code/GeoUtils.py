@@ -7,15 +7,19 @@ A stub used in order to implement Way-to-Go
 # Author: Callum France
 
 from math import radians, sin, cos, acos
-from data import test1
+import data
 
 
+# Naming according to the Assignment sheet does not use PEP8 - suppress warning
+# noinspection PyPep8Naming
 class GeoUtils(object):
     """GeoUtils.
 
     This class is a stub designed to implement several key facets
     used by Way-to-Go.
     """
+
+    # noinspection PyPep8Naming
     @staticmethod
     def retrieveRouteData():
         """Inserts raw route data into program.
