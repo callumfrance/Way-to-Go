@@ -29,18 +29,23 @@ class Tracker(GpsLocator):
         """Initialize the superclass GpsLocator (of which Tracker inherits)
         """
         GpsLocator.__init__(self)
+
+        self._fin = False
+        self._next_wp_position = 1
         self.the_route = in_route
+
         self.curr_loc = (in_route.gather_all_waypoints())[0]
         self.next_wp = (in_route.gather_all_waypoints())[1]
-        self._next_wp_position = 1
-        self.remaining = self._calc_total_distance()
+        print("made it")
         self.tracker_change_obs = set()
-        self._fin = False
+        print("set observers")
+        self.remaining = self._calc_total_distance()
+        print("set remaining")
         self._dist_up_to_next_wp = [
                 self.curr_loc.calc_metres_dist(self.next_wp),
                 self.curr_loc.calc_metres_ascent(self.next_wp),
                 self.curr_loc.calc_metres_descent(self.next_wp),
-            ]
+        ]
 
     @property
     def curr_loc(self):
@@ -48,13 +53,19 @@ class Tracker(GpsLocator):
 
     @curr_loc.setter
     def curr_loc(self, in_curr_loc):
+        print("curr setter is " + str(in_curr_loc))
         if isinstance(in_curr_loc, Waypoint):
-            if in_curr_loc is not self.curr_loc:
-                self._close_enough()
-                self.has_finished()
-                self._calc_remaining()
-                self.notify_tracker_change_obs()
             self._curr_loc = in_curr_loc
+            if hasattr(self, 'next_wp') and hasattr(self, '_fin'):
+                print("begin try of curr_loc")
+                self._close_enough()
+                print("set close_enough")
+                self.has_finished()
+                print("set has_finished")
+                self._calc_remaining()
+                print("set remaining")
+                self.notify_tracker_change_obs()
+                print("set observer")
 
     @property
     def the_route(self):
@@ -72,10 +83,11 @@ class Tracker(GpsLocator):
     @next_wp.setter
     def next_wp(self, in_next_wp):
         if isinstance(in_next_wp, Waypoint):
-            if in_next_wp is not self.next_wp:
-                self._calc_remaining()
-                # self.notify_tracker_change_obs()
             self._next_wp = in_next_wp
+            print("set next_wp as " + str(in_next_wp))
+        if hasattr(self, 'remaining'):
+            self._calc_remaining()
+            print("calc_remaining in next_wp")
 
     @property
     def remaining(self):
@@ -95,10 +107,11 @@ class Tracker(GpsLocator):
         self.notify_tracker_change_obs()
 
     def _calc_total_distance(self):
-        dist = list()
-        dist[0] = self.the_route.find_distance()
-        dist[1] = self.the_route.find_ascent()
-        dist[2] = self.the_route.find_descent()
+        dist = [
+            self.the_route.find_distance(),
+            self.the_route.find_ascent(),
+            self.the_route.find_descent(),
+        ]
         return dist
 
     def _calc_remaining(self):
@@ -165,9 +178,9 @@ class Tracker(GpsLocator):
         out_string = ""
         out_string += "\tCurrent Location: " + self.curr_loc.__str__() + "\n"
         out_string += "\tNext Waypoint: " + self.next_wp.__str__() + "\n"
-        out_string += "\tRemaining distance: " + self.remaining[0] + " m\n"
-        out_string += "\tRemaining climb: " + self.remaining[1] + " m\n"
-        out_string += "\tRemaining descent: " + self.remaining[2] + " m\n"
+        out_string += "\tRemaining distance: " + str(self.remaining[0]) + " m\n"
+        out_string += "\tRemaining climb: " + str(self.remaining[1]) + " m\n"
+        out_string += "\tRemaining descent: " + str(self.remaining[2]) + " m\n"
         return out_string
 
 # -------------
@@ -194,4 +207,4 @@ class Tracker(GpsLocator):
         """
         for o in self.tracker_change_obs:
             """Give all observing class a reference to this Tracker object"""
-            o.update(self)
+            o.tracker_update(self)

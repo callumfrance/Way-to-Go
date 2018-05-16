@@ -53,18 +53,15 @@ class GpsLocator(metaclass=abc.ABCMeta):
         """
         lines = in_str.split("\n")
         for x in lines:
-            y = None
+            y = list()
             x_coords = x.split(",")
             for single_coord in x_coords:
-                y = [
-                        float(single_coord[0]),
-                        float(single_coord[1]),
-                        float(single_coord[2]),
-                ]
+                y.append(float(single_coord))
             self._gps_data.append(y)
 
     def _location_received_wrapper(self, coords):
         """Expand list(3) into three floats to pass to abstact method."""
+        # print("locationReceived coords are: " + str(coords) + "\n")
         self.locationReceived(coords[0], coords[1], coords[2])
 
     @abc.abstractmethod
