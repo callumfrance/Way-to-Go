@@ -52,8 +52,7 @@ class Tracker(GpsLocator):
             if in_curr_loc is not self.curr_loc:
                 self._close_enough()
                 self.has_finished()
-                # update remaining
-                # update dist_up_to_next_wp
+                self._calc_remaining()
                 self.notify_tracker_change_obs()
             self._curr_loc = in_curr_loc
 
@@ -75,7 +74,7 @@ class Tracker(GpsLocator):
         if isinstance(in_next_wp, Waypoint):
             if in_next_wp is not self.next_wp:
                 self._calc_remaining()
-                self.notify_tracker_change_obs()
+                # self.notify_tracker_change_obs()
             self._next_wp = in_next_wp
 
     @property
@@ -87,6 +86,13 @@ class Tracker(GpsLocator):
         if isinstance(in_remaining, list):
             if len(in_remaining) is 3:
                 self._remaining = in_remaining
+
+    def manually_complete_waypoint(self):
+        self._next_wp_position += 1
+        if not self.has_finished():
+            self.next_wp = \
+                (self.the_route.gather_all_waypoints())[self._next_wp_position]
+        self.notify_tracker_change_obs()
 
     def _calc_total_distance(self):
         dist = list()
@@ -120,21 +126,22 @@ class Tracker(GpsLocator):
         self.remaining[2] = cumulative[2] + \
             all_points[self._next_wp_position].calc_metres_descent(self.curr_loc)
 
-
     def _close_enough(self):
         """Checks if the current location is within bounds to update
         the current waypoint.
         """
         if self.curr_loc.__eq__(self.next_wp):
-            self._next_wp_position += 1
-            if self._next_wp_position is len(self.the_route.gather_all_waypoints()):
-                self.has_finished(True)
-            else:
-                self.next_wp = self.the_route.retrieve_segment(self._next_wp_position)
+            self.manually_complete_waypoint()
+            # self._next_wp_position += 1
+            # if self._next_wp_position is len(self.the_route.gather_all_waypoints()):
+            #     self.has_finished(True)
+            # else:
+            #    self.next_wp = self.the_route.retrieve_segment(self._next_wp_position)
 
     def has_finished(self, manual_finish=False):
         r_len = len(self.the_route.gather_all_waypoints())
-        if manual_finish or self.curr_loc.__eq__(
+        if manual_finish or self._next_wp_position > r_len or \
+                self.curr_loc.__eq__(
                 (self.the_route.gather_all_waypoints()[r_len-1])):
             self._fin = True
         return self._fin

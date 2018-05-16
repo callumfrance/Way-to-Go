@@ -9,9 +9,8 @@ class UI:
     """The original view class
 
     Attributes:
-        none
-            There are no attributes for this view, so it can be instantiated
-            without requiring any inputs.
+        There are no attributes for this view, so it can be instantiated
+        without requiring any inputs.
     """
 
     @staticmethod
@@ -57,6 +56,8 @@ class UI:
                 choice = int(choice)
                 if 1 <= choice < len(in_directory.route_dict):
                     valid_route_select = True
+            elif choice in pattern:
+                valid_route_select = True
             if not valid_route_select:
                 print("Please select a valid route number, update, or exit.\n")
         return choice

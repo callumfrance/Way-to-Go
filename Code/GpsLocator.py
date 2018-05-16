@@ -67,6 +67,6 @@ class GpsLocator(metaclass=abc.ABCMeta):
         """Expand list(3) into three floats to pass to abstact method."""
         self.locationReceived(coords[0], coords[1], coords[2])
 
-    @abs.abstractmethod
+    @abc.abstractmethod
     def locationReceived(self, latitude, longitude, altitude):
         pass

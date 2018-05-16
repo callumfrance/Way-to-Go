@@ -27,7 +27,7 @@ class Controller:
                 # user wants to exit the program
                 selected_exit = True
             else:
-                # user has selected a route
+                # user has selected a route by entering its name
                 self.route_selected(choice)
         print("\n")
 

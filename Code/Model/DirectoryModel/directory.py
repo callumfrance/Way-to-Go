@@ -54,6 +54,7 @@ class Directory:
             out_route : Route
                 The requested Route object
         """
+        print(in_r_name)
         out_route = self.route_dict[in_r_name]
         return out_route
 
@@ -62,8 +63,8 @@ class Directory:
         counter = 1
         for key, value in self.route_dict.items():
             out_string += str(counter) + ". " + key + " " + value.r_desc + "\n"
-            out_string += "\t" + value.retrieve_segment(0) + "\n"
-            out_string += "\t" + value.retrieve_segment(len(value.pathway)-1)
+            out_string += "\t" + str(value.retrieve_segment(0)) + "\n"
+            out_string += "\t" + str(value.retrieve_segment(len(value.pathway)-1))
             out_string += "\n\n"
             counter += 1
         if counter is 1:
