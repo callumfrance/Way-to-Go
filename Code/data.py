@@ -63,14 +63,8 @@ if __name__ == '__main__':
     print("theStroll_location_updates is:\n\n{}"
           .format(theStroll_location_updates))
     print("-------------------------")
-
-
-if __name__ == '__main__':
-    print("-------------------------")
-    print("test1 is:\n\n{}".format(test1))
-    print("-------------------------\n")
     print("\n-------------------------")
-    print("theStroll_location_updates is:\n\n{}"
-          .format(theStroll_location_updates))
+    print("mainRoute_location_updates is:\n\n{}"
+          .format(mainRoute_location_updates))
     print("-------------------------")
 

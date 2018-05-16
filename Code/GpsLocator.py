@@ -33,8 +33,8 @@ class GpsLocator(metaclass=abc.ABCMeta):
                 test data the user is currently supposed to be at.
         """
         self._gps_data = list()
-        # self._construct_data(data.theStroll_location_updates)
-        self._construct_data(data.mainRoute_location_updates)
+        self._construct_data(data.theStroll_location_updates)
+        # self._construct_data(data.mainRoute_location_updates)
         self._current_pos = -1
         self.t = None
         self._time_function()

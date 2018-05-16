@@ -65,6 +65,10 @@ class Directory:
             out_string += key + " " + value.r_desc + "\n"
             out_string += "\t" + str(value.retrieve_segment(0)) + "\n"
             out_string += "\t" + str(value.retrieve_segment(len(value.pathway)-1))
+            out_string += "\n\t distance: "
+            out_string += str(value.calc_metres_dist()) + " m\n"
+            out_string += "\t ascent:" + str(value.find_ascent()) + " m\n"
+            out_string += "\t descent: " + str(value.find_descent()) + " m\n"
             out_string += "\n\n"
             counter += 1
         if counter is 1:

@@ -1,4 +1,5 @@
 from ..DirectoryModel.waypoint import Waypoint
+from ..DirectoryModel.description import Description
 from ..DirectoryModel.route import Route
 import sys
 sys.path.append('../../')
@@ -162,6 +163,8 @@ class Tracker(GpsLocator):
                     Remaining descent: <remaining[2]> m
                 "
         """
+        if isinstance(self.curr_loc, Description):
+            self.curr_loc.description = ""
         out_string = ""
         out_string += "\tCurrent Location: " + self.curr_loc.__str__() + "\n"
         out_string += "\tNext Waypoint: " + self.next_wp.__str__() + "\n"
