@@ -34,8 +34,8 @@ class GpsLocator(metaclass=abc.ABCMeta):
         """
         self._gps_data = list()
         self._construct_data(data.theStroll_location_updates)
-        self._current_pos = 0
-        self._location_received_wrapper(self._gps_data[self._current_pos])
+        self._current_pos = -1
+        self.t = None
         self._time_function()
 
     def _time_function(self):
@@ -44,8 +44,8 @@ class GpsLocator(metaclass=abc.ABCMeta):
         self._location_received_wrapper(self._gps_data[self._current_pos])
         if self._current_pos < len(self._gps_data):
             """Only keep going if you have not reached the end of the walk."""
-            t = threading.Timer(4, self._time_function)
-            t.start()
+            self.t = threading.Timer(1, self._time_function)
+            self.t.start()
 
     def _construct_data(self, in_str):
         """Takes in the input data and formats it into _gps_data as a list
@@ -63,6 +63,11 @@ class GpsLocator(metaclass=abc.ABCMeta):
         """Expand list(3) into three floats to pass to abstact method."""
         # print("locationReceived coords are: " + str(coords) + "\n")
         self.locationReceived(coords[0], coords[1], coords[2])
+
+    def __del__(self):
+        print("called GpsLocator delete")
+        self.t.cancel()
+        self.t.join()
 
     @abc.abstractmethod
     def locationReceived(self, latitude, longitude, altitude):

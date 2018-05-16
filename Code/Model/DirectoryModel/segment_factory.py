@@ -42,7 +42,7 @@ class SegmentFactory:
                 """Identified a line to be a Route"""
                 x = x.split(" ")
                 route_dict[x[0]] = self._make_route(x)
-                print("\nRoute key " + x[0] + " value " + str(route_dict[x[0]]))
+                # print("\nRoute key " + x[0] + " value " + str(route_dict[x[0]]))
         return route_dict
 
     def _make_all_segments(self, route_dict, data_lines):
@@ -79,7 +79,7 @@ class SegmentFactory:
         """
         # entry = data_line.split(" ")
         new_route = Route(entry[0], entry[1])
-        print("new route: " + str(new_route) + "\n")
+        # print("new route: " + str(new_route) + "\n")
         return new_route
 
     @staticmethod
@@ -111,5 +111,5 @@ class SegmentFactory:
             desc_attr = ''.join(entry[3:])
             new_segment = Description(entry[0], entry[1], entry[2], desc_attr)
 
-        print("new segment: " + str(new_segment) + "\n")
+        # print("new segment: " + str(new_segment) + "\n")
         return new_segment
