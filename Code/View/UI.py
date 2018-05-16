@@ -6,11 +6,17 @@ from Model.DirectoryModel.dir_update_observer import DirUpdateObserver
 
 
 class UI:
-    """The original view class"""
+    """The original view class
+
+    Attributes:
+        none
+            There are no attributes for this view, so it can be instantiated
+            without requiring any inputs.
+    """
 
     @staticmethod
     def __clear_screen():
-        """Clears the screen to allow new info to be printed"""
+        """Clears the console to allow new info to be printed"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def main_menu_wrapper(self, in_directory):
@@ -94,11 +100,11 @@ class UI:
     @staticmethod
     def _display_tracking(in_tracker):
         choice = 'F'
-        UI.__clear_screen()
         # needs to determine if the user has reached the end point
         finished_route = in_tracker.has_finished()
+        UI.__clear_screen()
 
-        while choice != 2 or not finished_route:
+        while choice != 2 and not finished_route:
             print("---------------------------------------------\n"
                   "- - - - - - - - Tracking Mode - - - - - - - -\n"
                   "---------------------------------------------\n\n")
@@ -106,15 +112,14 @@ class UI:
                   "\t2. Finish early\n\n")
             print("{}".format(in_tracker.__str__()))
             choice = int(input("\n> "))
-            UI.__clear_screen()
 
+            UI.__clear_screen()
             if choice is 1:
                 """Updates Tracker, which triggers its observer."""
                 in_tracker.manually_complete_waypoint()
             elif choice is not 2:
                 print("\nPlease enter 1 to manually complete waypoint"
                       "or 2 to go back\n")
-            # condition to show that a route has been finished goes here
 
 # print("\tCurrent Location: {}".format(in_tracker.curr_loc))
 # print("\tNext Waypoint: {}".format(in_tracker.next_waypoint))

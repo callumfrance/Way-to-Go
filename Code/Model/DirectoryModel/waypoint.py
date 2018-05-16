@@ -66,6 +66,11 @@ class Waypoint:
             raise TypeError("Altitude must be a float")
         self._altitude = in_altitude
 
+    def calc_metres_diff(self, next_segment):
+        x = self.calc_metres_dist(next_segment)
+        x.extend(self.calc_metres_vertical(next_segment))
+        return x
+
     def calc_metres_dist(self, next_segment=None):
         """Calls GeoUtils for two points along a route.
 

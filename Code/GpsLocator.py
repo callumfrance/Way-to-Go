@@ -10,6 +10,8 @@ It is designed to read in test data
 and then call the abstract hook method locationReceived() every 4 seconds.
 """
 
+__author__ = 'Callum France'
+
 
 class GpsLocator(metaclass=abc.ABCMeta):
 
@@ -66,5 +68,5 @@ class GpsLocator(metaclass=abc.ABCMeta):
         self.locationReceived(coords[0], coords[1], coords[2])
 
     @abs.abstractmethod
-    def locationReceived(latitude, longitude, altitude):
+    def locationReceived(self, latitude, longitude, altitude):
         pass
