@@ -142,7 +142,7 @@ class Route:
         vert_ans_list[1] = round(vert_ans_list[1], 2)
         return vert_ans_list
 
-    def find_climb(self):
+    def find_ascent(self):
         """Wrapper class to find vertical climb along the Route.
 
         Only returns the 'climb' component from find_vertical()

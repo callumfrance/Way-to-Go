@@ -18,12 +18,12 @@ class DirectoryTest(unittest.TestCase):
     def setUp(self):
         """Always construct a blank directory before each test."""
         self.raw = "TestName Great choice\n" \
-              "\t-31.96,115.80,63.0,d2_1 is loamy\n" \
-              "\t-31.95,115.78,45.3,d2_2 is sandy\n\n" \
-              "Dunes nice one!\n" \
-              "\t-31.94,115.75,47.1,d1_1 is hilly\n" \
-              "\t-31.94,115.75,55.3,d1_2 is slippery\n" \
-              "\t-31.94,115.75,71.0,d1_3 is rocky\n"
+                   "\t-31.96,115.80,63.0,d2_1 is loamy\n" \
+                   "\t-31.95,115.78,45.3,d2_2 is sandy\n\n" \
+                   "Dunes nice one!\n" \
+                   "\t-31.94,115.75,47.1,d1_1 is hilly\n" \
+                   "\t-31.94,115.75,55.3,d1_2 is slippery\n" \
+                   "\t-31.94,115.75,71.0,d1_3 is rocky\n"
 
         d1_1 = Description(-31.94, 115.75, 47.1, "d1_1 is hilly")
         d1_2 = Description(-31.94, 115.75, 55.3, "d1_2 is slippery")
@@ -58,7 +58,7 @@ class DirectoryTest(unittest.TestCase):
             }
         ]
 
-        self.direct.update_directory(self.raw)
+        self.direct.update_directory(self.raw, fact1)
 
     def test_retrieve_route_data(self):
         pass

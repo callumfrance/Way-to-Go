@@ -1,8 +1,6 @@
 import sys
 import os
-
 sys.path.append('../')
-
 from Model.TrackerModel.tracker_change_observer import TrackerChangeObserver
 from Model.DirectoryModel.dir_update_observer import DirUpdateObserver
 

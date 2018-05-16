@@ -1,10 +1,10 @@
 __all__ = [
-    'description',
-    'directory',
-    'dir_update_observer',
-    'route',
-    'segment_factory',
-    'waypoint',
+    'Description',
+    'Directory',
+    'DirUpdateObserver',
+    'Route',
+    'SegmentFactory',
+    'Waypoint',
 ]
 
 from .description import Description

@@ -133,7 +133,7 @@ class RouteTestCase(unittest.TestCase):
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.extend_path([self.d1_1, self.d1_2, self.d1_3, self.d1_4, self.wp_1])
         self.assertEqual(r1.find_vertical(), [60.90, 5.70])
-        self.assertEqual(r1.find_climb(), 60.90)
+        self.assertEqual(r1.find_ascent(), 60.90)
         self.assertEqual(r1.find_descent(), 5.70)
         del r1
 
@@ -142,7 +142,7 @@ class RouteTestCase(unittest.TestCase):
         r1 = Route("Scorching_Summer", "A hot one!")
         r1.extend_path([self.d1_1, r2, self.d1_4])
         self.assertEqual(r1.find_vertical(), [78.6, 17.7])
-        self.assertEqual(r1.find_climb(), 78.6)
+        self.assertEqual(r1.find_ascent(), 78.6)
         self.assertEqual(r1.find_descent(), 17.7)
 
 # also do an example of a route within a route

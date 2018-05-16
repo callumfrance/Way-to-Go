@@ -1,11 +1,9 @@
 from ..DirectoryModel.waypoint import Waypoint
 from ..DirectoryModel.route import Route
 import sys
-
-# GpsLocator is in the root folder so we must change the path to get access
 sys.path.append('../../')
-
 from GpsLocator import GpsLocator
+# GpsLocator is in the root folder so we must change the path to get access
 
 
 class Tracker(GpsLocator):
@@ -45,7 +43,7 @@ class Tracker(GpsLocator):
     @curr_loc.setter
     def curr_loc(self, in_curr_loc):
         if isinstance(in_curr_loc, Waypoint):
-            self.curr_loc = in_curr_loc
+            self._curr_loc = in_curr_loc
 
     @property
     def the_route(self):
@@ -102,11 +100,11 @@ class Tracker(GpsLocator):
         """
         if self.curr_loc.__eq__(self.next_wp):
             self._next_wp_position += 1
-            if self._next_wp_position is len(self.the_route.gather_all_waypoints):
+            if self._next_wp_position is len(self.the_route.gather_all_waypoints()):
                 # it has reached the end of the route!
                 pass
             else:
-                self.next_wp = in_route.retrieve_segment(self._next_wp_position)
+                self.next_wp = self.the_route.retrieve_segment(self._next_wp_position)
                 self._calc_remaining()
                 self.notify_tracker_change_obs()
 
@@ -136,7 +134,7 @@ class Tracker(GpsLocator):
             # should I raise an issue?
             pass
 
-    def notify_tracker_change_obs(self);
+    def notify_tracker_change_obs(self):
         """
         Will iterate through all observers and call relevant update code
         """

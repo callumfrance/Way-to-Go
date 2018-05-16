@@ -1,7 +1,7 @@
 import sys
 from GeoUtils import GeoUtils
 
-sys.path.append('../')
+# sys.path.append('../')
 
 from Model.DirectoryModel import Directory
 from Model.DirectoryModel import SegmentFactory

@@ -1,6 +1,6 @@
 __all__ = [
-    'tracker',
-    'tracker_change_observer',
+    'Tracker',
+    'TrackerChangeObserver',
 ]
 
 from .tracker import Tracker

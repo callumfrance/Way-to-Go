@@ -1,4 +1,4 @@
-from threading import Timer,Thread,Event
+from threading import Timer, Thread, Event
 import data
 
 """

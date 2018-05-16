@@ -3,8 +3,8 @@
 Way-to-Go Main Class
 """
 
-import controller
+from Controller import Controller
 
 if __name__ == '__main__':
-    con = controller.Controller()
+    con = Controller()
     con.main_menu()

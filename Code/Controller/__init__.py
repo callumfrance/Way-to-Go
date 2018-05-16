@@ -1,5 +1,5 @@
 __all__ = [
-    'controller',
+    'Controller',
 ]
 
 from .controller import Controller
