@@ -119,16 +119,22 @@ class Route:
                 all_wp.extend(x.gather_all_waypoints())
         return all_wp
 
+#     def __str__(self):
+#         route_str = self.r_name + " " + self.r_desc
+#         for x in self.pathway:
+#             if isinstance(x, Route):
+#                 route_str += "\n\t{},*{}".format(
+#                     x.pathway[0].__str__(), x.r_name)
+#             else:
+#                 # route_str += "{}\n".format(x.__str())
+#
+#                 route_str += "\n\t{}".format(x.__str__())
+#         return route_str
+
     def __str__(self):
         route_str = self.r_name + " " + self.r_desc
-        for x in self.pathway:
-            if isinstance(x, Route):
-                route_str += "\n\t{},*{}".format(
-                    x.pathway[0].__str__(), x.r_name)
-            else:
-                # route_str += "{}\n".format(x.__str())
-
-                route_str += "\n\t{}".format(x.__str__())
+        for x in self.gather_all_waypoints():
+            route_str += "\n\t{}".format(x.__str__())
         return route_str
 
     def find_distance(self):

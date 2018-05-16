@@ -127,6 +127,8 @@ class Tracker(GpsLocator):
         if not self.has_finished():
             self.next_wp = \
                 (self.the_route.gather_all_waypoints())[self._next_wp_position]
+        else:
+            self.remaining = [0.0, 0.0, 0.0]
         self.notify_tracker_change_obs()
 
     def _close_enough(self):
@@ -138,7 +140,7 @@ class Tracker(GpsLocator):
 
     def has_finished(self, manual_finish=False):
         r_len = len(self.the_route.gather_all_waypoints())
-        if manual_finish or self._next_wp_position > r_len or \
+        if manual_finish or self._next_wp_position >= r_len or \
                 self.curr_loc.__eq__(
                 (self.the_route.gather_all_waypoints()[r_len-1])):
             self._fin = True

@@ -92,13 +92,10 @@ class UI:
                 UI._clear_screen()
                 UI._mini_tracking(arg)
 
-        print("begun tracking wrapper")
         concrete_track_ob = TrackerChangeObserverImpl()
         in_tracker.add_tracker_change_ob(concrete_track_ob)
-        print("added observer to tracker")
 
         self._display_tracking(in_tracker)
-        print("tracking wrapper has finished display tracking")
 
         # stops displaying tracking mode once finished the route
         # therefore this is where the observer should be removed
@@ -118,9 +115,16 @@ class UI:
             if choice is '1':
                 """Updates Tracker, which triggers its observer."""
                 in_tracker.manually_complete_waypoint()
+                UI._clear_screen()
+                if in_tracker.has_finished():
+                    print("\nPlease enter 2 to go back\n")
             elif choice is not '2':
-                print("\nPlease enter 1 to manually complete waypoint"
-                      " or 2 to go back\n")
+                if in_tracker.has_finished():
+                    UI._clear_screen()
+                    print("\nPlease enter 2 to go back\n")
+                else:
+                    print("\nPlease enter 1 to manually complete waypoint"
+                          " or 2 to go back\n")
 
     @staticmethod
     def _mini_tracking(in_tracker):
