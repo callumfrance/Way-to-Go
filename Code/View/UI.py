@@ -14,7 +14,7 @@ class UI:
     """
 
     @staticmethod
-    def __clear_screen():
+    def _clear_screen():
         """Clears the console to allow new info to be printed"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -38,7 +38,7 @@ class UI:
         choice = 5
         # Must check if user input matches any route name listed in the Dir
         pattern = list(in_directory.route_dict.keys())
-        # UI.__clear_screen()
+        UI._clear_screen()
 
         # while choice is not A or B or any valid route_list number
         while choice not in pattern and choice is not 1 and choice is not 2:
@@ -46,10 +46,11 @@ class UI:
                   "- - - - - - - - Way-to-Go - - - - - - - -\n"
                   "-----------------------------------------\n\n")
             print("\t1. Update routes \n"
-                  "\t2. Exit\n\n")
+                  "\t2. Exit\n"
+                  "\tor enter a route name for more detail\n\n")
             print("{}".format(in_directory.__str__()))
             choice = input("\n> ")
-            # UI.__clear_screen()
+            UI._clear_screen()
 
             if choice not in pattern:
                 try:
@@ -68,7 +69,7 @@ class UI:
         """
 
         choice = 'F'
-        # self.__clear_screen()
+        # UI.__clear_screen()
         while choice != 1 and choice != 2:
             print("---------------------------------------------\n"
                   "- - - - - - - - Route View  - - - - - - - - -\n"
@@ -80,7 +81,7 @@ class UI:
                 choice = int(input("\n> "))
             except ValueError:
                 pass
-            # self.__clear_screen()
+            UI._clear_screen()
             if choice != 1 and choice != 2:
                 print("\nPlease enter 1 to begin this route or 2 to go back\n")
         return choice
@@ -88,6 +89,7 @@ class UI:
     def tracking_wrapper(self, in_tracker):
         class TrackerChangeObserverImpl(TrackerChangeObserver):
             def tracker_update(self, arg):
+                UI._clear_screen()
                 UI._mini_tracking(arg)
 
         print("begun tracking wrapper")
@@ -105,43 +107,32 @@ class UI:
     def _display_tracking(self, in_tracker):
         choice = 'F'
         # needs to determine if the user has reached the end point
-        # finished_route = in_tracker.has_finished()
-        # UI.__clear_screen()
+        finished_route = in_tracker.has_finished()
+        UI._clear_screen()
 
-        # while choice != 2 and not finished_route:
-        while choice != 2:
+        while choice != '2' and not finished_route:
             self._mini_tracking(in_tracker)
-            choice = int(input(""))
+            choice = input("")
 
-            # UI.__clear_screen()
-            if choice is 1:
+            UI._clear_screen()
+            if choice is '1':
                 """Updates Tracker, which triggers its observer."""
                 in_tracker.manually_complete_waypoint()
-            elif choice is not 2:
+            elif choice is not '2':
                 print("\nPlease enter 1 to manually complete waypoint"
-                      "or 2 to go back\n")
+                      " or 2 to go back\n")
 
     @staticmethod
     def _mini_tracking(in_tracker):
         print("---------------------------------------------\n"
               "- - - - - - - - Tracking Mode - - - - - - - -\n"
               "---------------------------------------------\n\n")
-        print("\t1. Manually complete this waypoint\n"
-              "\t2. Finish early\n\n")
+        if not in_tracker.has_finished():
+            print("\t1. Manually complete this waypoint\n"
+                  "\t2. Finish early\n\n")
+        else:
+            print("\t\t***You have finished!***")
+            print("\t\t\tWay to Go!\n")
+            print("\t2. Exit\n\n")
         print("{}".format(in_tracker.__str__()))
-        print("\n=>")
-
-# print("\tCurrent Location: {}".format(in_tracker.curr_loc))
-# print("\tNext Waypoint: {}".format(in_tracker.next_waypoint))
-# print("\tRemaining distance: {} m".format(in_tracker.remaining[0]))
-# print("\tRemaining climb: {} m".format(in_tracker.remaining[1]))
-# print("\tRemaining descent: {} m".format(in_tracker.remaining[2]))
-
-
-# --------------------
-# Put code here to print out all Directory route info
-#   route name
-#   route description
-#   start and end coordinates
-#   total distance (horizontal, climb, descent)
-# --------------------
+        print("\nYour selection:")

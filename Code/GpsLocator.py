@@ -42,9 +42,9 @@ class GpsLocator(metaclass=abc.ABCMeta):
         """Simulates time spent walking between two spots on a pathway."""
         self._current_pos += 1
         self._location_received_wrapper(self._gps_data[self._current_pos])
-        if self._current_pos < len(self._gps_data):
+        if self._current_pos < len(self._gps_data)-1:
             """Only keep going if you have not reached the end of the walk."""
-            self.t = threading.Timer(1, self._time_function)
+            self.t = threading.Timer(7, self._time_function)
             self.t.start()
 
     def _construct_data(self, in_str):
@@ -65,7 +65,6 @@ class GpsLocator(metaclass=abc.ABCMeta):
         self.locationReceived(coords[0], coords[1], coords[2])
 
     def __del__(self):
-        print("called GpsLocator delete")
         self.t.cancel()
         self.t.join()
 

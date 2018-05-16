@@ -68,7 +68,7 @@ class Directory:
             out_string += "\n\n"
             counter += 1
         if counter is 1:
-            out_string += "Directory is currently empty\n\n"
+            out_string += "You do not know any routes\n\n"
         return out_string
 
 # -------------

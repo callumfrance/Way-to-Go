@@ -45,6 +45,5 @@ class Controller:
 
     def tracking(self, chosen_route):
         track = Tracker(chosen_route)
-        print("created track in controller")
         self.view.tracking_wrapper(track)
         del track

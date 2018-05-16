@@ -29,19 +29,15 @@ class Tracker(GpsLocator):
         """Initialize the superclass GpsLocator (of which Tracker inherits)
         """
         GpsLocator.__init__(self)
-        print("\tend of gps init in tracker")
 
         self._fin = False
         self._next_wp_position = 1
         self.the_route = in_route
         self.tracker_change_obs = set()
-        print("done easy setters")
 
         self.curr_loc = (in_route.gather_all_waypoints())[0]
         self.next_wp = (in_route.gather_all_waypoints())[1]
-        print("made it")
         self.remaining = self._calc_total_distance()
-        print("set remaining")
         # self._dist_up_to_next_wp = [
         #         self.curr_loc.calc_metres_dist(self.next_wp),
         #         self.curr_loc.calc_metres_ascent(self.next_wp),
@@ -54,16 +50,14 @@ class Tracker(GpsLocator):
 
     @curr_loc.setter
     def curr_loc(self, in_curr_loc):
-        print("curr setter is " + str(in_curr_loc))
         if isinstance(in_curr_loc, Waypoint):
             self._curr_loc = in_curr_loc
             if hasattr(self, 'next_wp') and hasattr(self, '_fin'):
-                print("begin hasattr of curr_loc")
-                self._close_enough()
-                self.has_finished()
-                self._calc_remaining()
+                asdf = self.has_finished()
+                if not self._fin:
+                    self._close_enough()
+                    self._calc_remaining()
                 self.notify_tracker_change_obs()
-            print("end of curr_loc isinstance")
 
     @property
     def the_route(self):
@@ -82,11 +76,6 @@ class Tracker(GpsLocator):
     def next_wp(self, in_next_wp):
         if isinstance(in_next_wp, Waypoint):
             self._next_wp = in_next_wp
-            print("set next_wp as " + str(in_next_wp))
-            # print("wp_pos is " + str(self._next_wp_position))
-        if hasattr(self, 'remaining'):
-            self._calc_remaining()
-            print("calc_remaining in next_wp")
 
     @property
     def remaining(self):
@@ -97,13 +86,6 @@ class Tracker(GpsLocator):
         if isinstance(in_remaining, list):
             if len(in_remaining) is 3:
                 self._remaining = in_remaining
-
-    def manually_complete_waypoint(self):
-        self._next_wp_position += 1
-        if not self.has_finished():
-            self.next_wp = \
-                (self.the_route.gather_all_waypoints())[self._next_wp_position]
-        self.notify_tracker_change_obs()
 
     def _calc_total_distance(self):
         dist = [
@@ -122,47 +104,39 @@ class Tracker(GpsLocator):
         the end of the route.
         Finally, the distance between the current location is added to this.
         """
-        print("running calc_remaining")
         cumulative = [0.0, 0.0, 0.0]
 
         all_points = self.the_route.gather_all_waypoints()
-        print("\nall_points :" + str(all_points) + "\n\n")
 
         for x in range(self._next_wp_position, len(all_points)-1):
-            print("cumulative " + str(x) + " is: " + str(cumulative))
             cumulative[0] += all_points[x].calc_metres_dist(all_points[x+1])
             vert = all_points[x].calc_metres_vertical(all_points[x+1])
             cumulative[1] += vert[0]
             cumulative[2] += vert[1]
 
-        print("cumulative is: " + str(cumulative))
-
         self.remaining[0] = cumulative[0] + \
             all_points[self._next_wp_position].calc_metres_dist(self.curr_loc)
 
         vert = self.curr_loc.calc_metres_vertical(all_points[self._next_wp_position])
-        print("vert 0 is " + str(vert[0]) + " vert 1 is " + str(vert[1]))
 
         self.remaining[1] = cumulative[1] + vert[0]
         self.remaining[2] = cumulative[2] + vert[1]
 
-        print("remaining is: " + str(self.remaining))
+    def manually_complete_waypoint(self):
+        self._next_wp_position += 1
+        if not self.has_finished():
+            self.next_wp = \
+                (self.the_route.gather_all_waypoints())[self._next_wp_position]
+        self.notify_tracker_change_obs()
 
     def _close_enough(self):
         """Checks if the current location is within bounds to update
         the current waypoint.
         """
-        print("running close enough")
         if self.curr_loc.__eq__(self.next_wp):
             self.manually_complete_waypoint()
-            # self._next_wp_position += 1
-            # if self._next_wp_position is len(self.the_route.gather_all_waypoints()):
-            #     self.has_finished(True)
-            # else:
-            #    self.next_wp = self.the_route.retrieve_segment(self._next_wp_position)
 
     def has_finished(self, manual_finish=False):
-        print("running has_finished")
         r_len = len(self.the_route.gather_all_waypoints())
         if manual_finish or self._next_wp_position > r_len or \
                 self.curr_loc.__eq__(
@@ -173,8 +147,6 @@ class Tracker(GpsLocator):
     def locationReceived(self, latitude, longitude, altitude):
         """Implementation of abstract class within GpsLocator.
         """
-        print("entered hook method")
-        print("\t{} {} {}".format(latitude, longitude, altitude))
         self.curr_loc = Waypoint(latitude, longitude, altitude)
 
     def __str__(self):
@@ -218,7 +190,6 @@ class Tracker(GpsLocator):
         """
         Will iterate through all observers and call relevant update code
         """
-        print("running notify observers")
         for o in self.tracker_change_obs:
             """Give all observing class a reference to this Tracker object"""
             o.tracker_update(self)
