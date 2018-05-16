@@ -1,3 +1,8 @@
+import unittest
+from .description import Description
+from .route import Route
+from .waypoint import Waypoint
+from GeoUtils import GeoUtils
 """
 route_test.py
 
@@ -5,12 +10,7 @@ navigate to the root directory of this project in the console
 Run the following in the console
       python -m Model.DirectoryModel.route_test
 """
-
 # Author: Callum France
-import unittest
-from .description import Description
-from .route import Route
-from .waypoint import Waypoint
 
 
 class RouteTestCase(unittest.TestCase):
