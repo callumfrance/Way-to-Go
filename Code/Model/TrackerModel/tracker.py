@@ -108,24 +108,20 @@ class Tracker(GpsLocator):
         cumulative = [0.0, 0.0, 0.0]
 
         all_points = self.the_route.gather_all_waypoints()
-        print("gathered: " + str(all_points))
 
         for x in range(self._next_wp_position, len(all_points)-1):
             cumulative[0] += all_points[x].calc_metres_dist(all_points[x+1])
             vert = all_points[x].calc_metres_vertical(all_points[x+1])
             cumulative[1] += vert[0]
             cumulative[2] += vert[1]
-            print("\tx {}\t cumulative {}".format(str(x), str(cumulative)))
 
         self.remaining[0] = cumulative[0] + \
             all_points[self._next_wp_position].calc_metres_dist(self.curr_loc)
 
         vert = self.curr_loc.calc_metres_vertical(all_points[self._next_wp_position])
-        print(str(vert))
 
         self.remaining[1] = cumulative[1] + vert[0]
         self.remaining[2] = cumulative[2] + vert[1]
-        print(str(self.remaining))
 
     def manually_complete_waypoint(self):
         self._next_wp_position += 1

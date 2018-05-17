@@ -89,7 +89,7 @@ class UI:
     def tracking_wrapper(self, in_tracker):
         class TrackerChangeObserverImpl(TrackerChangeObserver):
             def tracker_update(self, arg):
-                # UI._clear_screen()
+                UI._clear_screen()
                 UI._mini_tracking(arg)
 
         concrete_track_ob = TrackerChangeObserverImpl()
