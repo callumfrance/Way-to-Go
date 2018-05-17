@@ -1,5 +1,10 @@
 """
 Description
+
+The leaf class of the Segment composite.
+Note: Segment class does not exist because the program uses duck typing.
+
+This class is basically the Waypoint class with an added description attribute.
 """
 
 # Author: Callum France

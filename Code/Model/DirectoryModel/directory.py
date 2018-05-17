@@ -1,14 +1,11 @@
 """
-Two observers -
-    One that allows you to subscribe to a 'whole Directory' change
-        The view needs to know when the data changes so it can refresh
-    One that allows you to see when a Route is retrieved from Directory
-        Tracker will want to subscribe to this
-        Once it has picked a route, it will unsubscribe
-            This means more route calls can be made without 'restarting' tracker
-        Once the Tracker has finished the route, it can resubscribe
+Directory
 
+Contains an observer that allows you to subscribe to a 'whole Directory' change
+        The view needs to know when the data changes so it can refresh
 """
+
+# Author: Callum France
 
 
 class Directory:
@@ -59,6 +56,20 @@ class Directory:
         return out_route
 
     def __str__(self):
+        """Turns all relevant data in this Class into a String for the UI to display.
+
+        Needs to display each routes -
+            Name and description
+            Beginning
+            End
+            Total distance
+            Total ascent
+            Total descent
+
+        Returns:
+            out_string : String
+                The representation of this class in human-readable, formatted string form.
+        """
         out_string = ""
         counter = 1
         for key, value in self.route_dict.items():
@@ -80,7 +91,8 @@ class Directory:
 # -------------
 
     def add_dir_wide_update_ob(self, observer):
-        """Adds a new observer to the set of observers"""
+        """Adds a new observer to the set of observers.
+        """
         self.dir_wide_update_obs.add(observer)
 
     def rem_dir_wide_update_ob(self, observer):
@@ -91,12 +103,11 @@ class Directory:
         try:
             self.dir_wide_update_obs.discard(observer)
         except IndexError:
-            # should I raise an issue?
+            # Tried to remove an observer that was never in this Directory object
             pass
 
     def notify_dir_wide_update_obs(self):
-        """
-        Will iterate through all observers and call relevant update code
+        """Will iterate through all observers and call relevant update code.
         """
         for o in self.dir_wide_update_obs:
             o.update(self.route_dict)

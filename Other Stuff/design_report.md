@@ -1,6 +1,6 @@
 Way-to-Go Design Report
 =======================
-### Author: Callum France
+### by Callum France
 ##### Architectural Pattern
 Way-to-Go used the model-view-controller architectural pattern.
 

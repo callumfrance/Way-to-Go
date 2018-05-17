@@ -1,3 +1,9 @@
+"""
+Packages the Controller.
+"""
+
+# Author: Callum France
+
 __all__ = [
     'Controller',
 ]

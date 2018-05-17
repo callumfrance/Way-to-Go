@@ -1,6 +1,11 @@
 """
 Route
+
+The file contains the Route class - which represents one possible route a user can select in the program, and its data.
 """
+
+# Author: Callum France
+
 import re
 from .description import Description
 from .waypoint import Waypoint
@@ -84,10 +89,15 @@ class Route:
         self.pathway.extend(in_multi_segs)
 
     def retrieve_segment(self, pos):
-        """Retrieves a segment at a specified point along the route."""
-# This needs to be extended.
-# In order for a new route to be created (case 2), it won't have any
-# segments to begin with, but there needs to be 'something' there...
+        """Retrieves a segment at a specified point along the route.
+
+        This differs from gathe_all_waypoints() as it simply returns a segment at the top level - i.e. it can return
+        a sub-route.
+
+        Returns:
+            self.pathway[pos] : Segment
+                Segment object accessed by index from the route's pathway.
+        """
         return self.pathway[pos]
 
     @staticmethod
@@ -110,39 +120,42 @@ class Route:
     def gather_all_waypoints(self):
         """A method that recurses through the Route and returns every waypoint
         included either directly in this Route, or inside a sub-route.
+
+        Returns:
+            all_wp : list<Waypoint>
+                A list containing every single Waypoint in this Route or in a sub-route of this Route.
         """
         all_wp = list()
         for x in self.pathway:
-            if isinstance(x, Waypoint):
+            if isinstance(x, Waypoint):  # leaf-node - simply append to current list
                 all_wp.append(x)
             else:  # must be a sub-Route
                 all_wp.extend(x.gather_all_waypoints())
         return all_wp
 
-#     def __str__(self):
-#         route_str = self.r_name + " " + self.r_desc
-#         for x in self.pathway:
-#             if isinstance(x, Route):
-#                 route_str += "\n\t{},*{}".format(
-#                     x.pathway[0].__str__(), x.r_name)
-#             else:
-#                 # route_str += "{}\n".format(x.__str())
-#
-#                 route_str += "\n\t{}".format(x.__str__())
-#         return route_str
-
     def __str__(self):
+        """Turns this class into a string for the UI to display in the single route view.
+
+        Returns:
+            route_str : String
+                The Route object formatted as a human-readable string.
+                Contains:
+                    route name and description
+                        coordinates and description of every Description in this Route or one of its sub-routes
+        """
         route_str = self.r_name + " " + self.r_desc
         for x in self.gather_all_waypoints():
             route_str += "\n\t{}".format(x.__str__())
         return route_str
 
     def find_distance(self):
-        """Wrapper class to find horizontal distance across the Route"""
+        """Wrapper class to find horizontal distance across the Route.
+        """
         return round(self.calc_metres_dist(), 2)
 
     def find_vertical(self):
-        """Wrapper class to find vertical distance along the Route"""
+        """Wrapper class to find vertical distance along the Route.
+        """
         vert_ans_list = self.calc_metres_vertical()
         vert_ans_list[0] = round(vert_ans_list[0], 2)
         vert_ans_list[1] = round(vert_ans_list[1], 2)
@@ -175,9 +188,13 @@ class Route:
 
         Parameters:
             next_segment : Segment
+                Parameter is not implemented in this method but is included because of its implementation from the
+                Segment class (which does not exist due to duck typing)
+                - i.e. to be consistend with Waypoint.calc_metres_distance()
 
         Returns:
             cumulative : float
+                The total horizontal distance covered in this Route.
         """
         cumulative = 0.0
         for i, seg in zip(range(len(self.pathway)-1), self.pathway):
@@ -188,17 +205,13 @@ class Route:
             """
             next_seg = self.retrieve_segment(i+1)
             if isinstance(seg, Route):
-                """
-                if seg is a Route, recurse and find that Routes distance
-                """
+                # if seg is a Route, recurse and find that Routes distance
                 cumulative += seg.calc_metres_dist(None)
                 y = seg.retrieve_segment(len(seg.pathway)-1)
             else:
                 y = seg
 
-            """
-            if next_seg is a Route, find its 1st waypoint
-            """
+            # if next_seg is a Route, find its 1st waypoint
             if isinstance(next_seg, Route):
                 x = next_seg.retrieve_segment(0)
             else:
@@ -213,6 +226,9 @@ class Route:
 
         Parameters:
             next_segment : Segment
+                Parameter is not implemented in this method but is included because of its implementation from the
+                Segment class (which does not exist due to duck typing)
+                - i.e. to be consistend with Waypoint.calc_metres_vertical()
 
         Returns:
             cumulative : float[2]
@@ -228,9 +244,7 @@ class Route:
              """
             next_seg = self.retrieve_segment(i+1)
             if isinstance(seg, Route):
-                """
-                if seg is a Route, recurse and find that Routes distance
-                """
+                # if seg is a Route, recurse and find that Routes distance
                 subr_tot = seg.calc_metres_vertical(None)
                 cumulative[0] += subr_tot[0]
                 cumulative[1] += subr_tot[1]
@@ -238,11 +252,13 @@ class Route:
             else:
                 y = seg
 
+            # if next seg is a Route, find the first Waypoint inside to compare against our current seg
             if isinstance(next_seg, Route):
                 x = next_seg.retrieve_segment(0)
             else:
                 x = next_seg
 
+            # sum the result to our returning variable
             seg_vert = y.calc_metres_vertical(x)
             cumulative[0] += seg_vert[0]
             cumulative[1] += seg_vert[1]

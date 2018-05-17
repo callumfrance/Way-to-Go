@@ -1,10 +1,14 @@
+"""
+Waypoint
+
+The basic coordinates class.
+"""
+
+# Author: Callum France
+
 import sys
 sys.path.append('../..')
 from GeoUtils import GeoUtils
-"""
-Waypoint
-"""
-__author__ = 'Callum France'
 
 
 class Waypoint:
@@ -26,8 +30,6 @@ class Waypoint:
         self.latitude = in_latitude
         self.longitude = in_longitude
         self.altitude = in_altitude
-        # print("\nWaypoint is: {},{},{}".format(self.latitude, self.longitude,
-        #                                        self.altitude))
 
     @property
     def latitude(self):
@@ -90,9 +92,15 @@ class Waypoint:
         return dist
 
     def calc_metres_ascent(self, next_segment):
+        """Simply returns the first value returned by calc_metres_vertical()
+        which is the total ascent between 2 points.
+        """
         return (self.calc_metres_vertical())[0]
 
     def calc_metres_descent(self, next_segment):
+        """Simply returns the first value returned by calc_metres_vertical()
+        which is the total descent between 2 points.
+        """
         return (self.calc_metres_vertical())[1]
 
     def calc_metres_vertical(self, next_segment=None):

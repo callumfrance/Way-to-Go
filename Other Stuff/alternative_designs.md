@@ -1,7 +1,6 @@
 Alternative Designs
 ===================
-### Author: Callum France
-
+### by Callum France
 ##### Alternative 1
 Instead of using a composite pattern to store routes (that may contain other routes and so on), an alternative may be to simply enforce that a Route object can only contain Description objects. If a Route does contain a sub-route, then that sub-route is expanded into a list of Description objects and this list is inserted in its place.
 
