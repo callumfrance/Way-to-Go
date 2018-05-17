@@ -56,7 +56,7 @@ class Directory:
         return out_route
 
     def __str__(self):
-        """Turns all relevant data in this Class into a String for the UI to display.
+        """Turns all relevant data in this Class into a String for the UI.
 
         Needs to display each routes -
             Name and description
@@ -68,14 +68,14 @@ class Directory:
 
         Returns:
             out_string : String
-                The representation of this class in human-readable, formatted string form.
+                The representation of this class in human-readable string form.
         """
         out_string = ""
         counter = 1
         for key, value in self.route_dict.items():
             out_string += key + " " + value.r_desc + "\n"
-            out_string += "\t" + str(value.retrieve_segment(0)) + "\n"
-            out_string += "\t" + str(value.retrieve_segment(len(value.pathway)-1))
+            out_string += "\t" + str(value.retrieve_segment(0)) + "\n\t"
+            out_string += str(value.retrieve_segment(len(value.pathway)-1))
             out_string += "\n\t distance: "
             out_string += str(value.calc_metres_dist()) + " m\n"
             out_string += "\t ascent:" + str(value.find_ascent()) + " m\n"
@@ -103,7 +103,7 @@ class Directory:
         try:
             self.dir_wide_update_obs.discard(observer)
         except IndexError:
-            # Tried to remove an observer that was never in this Directory object
+            # Tried to remove an observer that was never in the Directory
             pass
 
     def notify_dir_wide_update_obs(self):

@@ -20,9 +20,11 @@ class Controller:
         self.seg_fact = SegmentFactory()
 
     def main_menu(self):
-        """The main_menu is the point at which a user will begin and end the program, and everything in between.
+        """The main_menu is the point at which a user will begin and
+        end the program, and everything in between.
 
-        From here, the user can either exit the program, update routes, or select a route to view - each of which
+        From here, the user can either exit the program, update routes,
+        or select a route to view - each of which
         will call another method inside the Controller.
         """
         selected_exit = False
@@ -40,14 +42,16 @@ class Controller:
         print("\n")
 
     def update_routes(self):
-        """Retrieves route data from GeoUtils and adds it to the Directory, which is then displayed on the main menu.
+        """Retrieves route data from GeoUtils and adds it to the Directory,
+        which is then displayed on the main menu.
         """
         in_data = GeoUtils.retrieveRouteData()
         self.directory_model.update_directory(in_data, self.seg_fact)
 
     def route_selected(self, route_val):
-        """Retrieves the selected route from the Directory and displays it to the single route view method in the UI.
-        If the user does not choose this route this method will simply exit and return to the main_menu.
+        """Retrieves the selected route from the Directory and displays it
+        to the single route view method in the UI. If the user does not choose
+        this route this method will simply exit and return to the main_menu.
 
         Attributes:
             route_val : String
@@ -60,11 +64,12 @@ class Controller:
             self.tracking(chosen_route)
 
     def tracking(self, chosen_route):
-        """Links together a Tracker class and the UI tracking section for when a user wants to travel a Route.
+        """Links together a Tracker class and the UI tracking section
+        for when a user wants to travel a Route.
 
         Parameters:
             chosen_route : Route
-                This is the Route that the use has selected they will be travelling along.
+                This is the Route that the use has selected to travel along.
         """
         track = Tracker(chosen_route)
         self.view.tracking_wrapper(track)

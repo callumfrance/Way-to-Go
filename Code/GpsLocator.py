@@ -73,7 +73,8 @@ class GpsLocator(metaclass=abc.ABCMeta):
         self.locationReceived(coords[0], coords[1], coords[2])
 
     def __del__(self):
-        """ Cancels any threads that have not completed and returns to normal program.
+        """ Cancels any threads that have not completed,
+        and returns to normal program.
         """
         self.t.cancel()
         self.t.join()

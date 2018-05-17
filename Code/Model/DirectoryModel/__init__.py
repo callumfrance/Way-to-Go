@@ -1,3 +1,9 @@
+"""
+Packages the DirectoryModel.
+"""
+
+# Author: Callum France
+
 __all__ = [
     'Description',
     'Directory',

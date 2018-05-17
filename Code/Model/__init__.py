@@ -1,3 +1,9 @@
+"""
+Packages the Model.
+"""
+
+# Author: Callum France
+
 __all__ = [
     'Description',
     'Directory',

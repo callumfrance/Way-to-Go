@@ -1,3 +1,9 @@
+"""
+Packages the TrackerModel.
+"""
+
+# Author: Callum France
+
 __all__ = [
     'Tracker',
     'TrackerChangeObserver',

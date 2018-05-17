@@ -1,7 +1,8 @@
 """
 Route
 
-The file contains the Route class - which represents one possible route a user can select in the program, and its data.
+The file contains the Route class - which represents one possible route
+a user can select in the program, and its data.
 """
 
 # Author: Callum France
@@ -91,8 +92,8 @@ class Route:
     def retrieve_segment(self, pos):
         """Retrieves a segment at a specified point along the route.
 
-        This differs from gathe_all_waypoints() as it simply returns a segment at the top level - i.e. it can return
-        a sub-route.
+        This differs from gather_all_waypoints() as it simply returns
+        a segment at the top level - i.e. it can return a sub-route.
 
         Returns:
             self.pathway[pos] : Segment
@@ -123,25 +124,25 @@ class Route:
 
         Returns:
             all_wp : list<Waypoint>
-                A list containing every single Waypoint in this Route or in a sub-route of this Route.
+                A list with every single Waypoint in this Route or sub-Route/s
         """
         all_wp = list()
         for x in self.pathway:
-            if isinstance(x, Waypoint):  # leaf-node - simply append to current list
+            if isinstance(x, Waypoint):  # leaf-node - append to current list
                 all_wp.append(x)
             else:  # must be a sub-Route
                 all_wp.extend(x.gather_all_waypoints())
         return all_wp
 
     def __str__(self):
-        """Turns this class into a string for the UI to display in the single route view.
+        """Turns this class into a string for the UI.
 
         Returns:
             route_str : String
                 The Route object formatted as a human-readable string.
                 Contains:
-                    route name and description
-                        coordinates and description of every Description in this Route or one of its sub-routes
+                route name and description
+                coordinates and description of every Description in Route or sub
         """
         route_str = self.r_name + " " + self.r_desc
         for x in self.gather_all_waypoints():
@@ -188,8 +189,9 @@ class Route:
 
         Parameters:
             next_segment : Segment
-                Parameter is not implemented in this method but is included because of its implementation from the
-                Segment class (which does not exist due to duck typing)
+                Parameter is not implemented in this method but is included
+                because of its implementation from the Segment class
+                (Segment class does not exist due to duck typing)
                 - i.e. to be consistend with Waypoint.calc_metres_distance()
 
         Returns:
@@ -226,9 +228,10 @@ class Route:
 
         Parameters:
             next_segment : Segment
-                Parameter is not implemented in this method but is included because of its implementation from the
-                Segment class (which does not exist due to duck typing)
-                - i.e. to be consistend with Waypoint.calc_metres_vertical()
+                Parameter is not implemented in this method but is included
+                because of its implementation from the Segment class
+                (Segment class does not exist due to duck typing)
+                - i.e. to be consistent with Waypoint.calc_metres_vertical()
 
         Returns:
             cumulative : float[2]
@@ -252,7 +255,7 @@ class Route:
             else:
                 y = seg
 
-            # if next seg is a Route, find the first Waypoint inside to compare against our current seg
+            # if next seg is a Route, find the first Waypoint inside it
             if isinstance(next_seg, Route):
                 x = next_seg.retrieve_segment(0)
             else:

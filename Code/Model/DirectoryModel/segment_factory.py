@@ -41,7 +41,7 @@ class SegmentFactory:
         """
         if self.test_loader is not None:
             new_directory = self.test_loader
-        else:  # not using test data, therefore actually create Segments for realsies
+        else:  # not using test data, therefore actually create for realsies
             data_lines = data.split("\n")
             new_routes = self._make_all_routes(data_lines)
             new_directory = self._make_all_segments(new_routes, data_lines)
@@ -52,7 +52,8 @@ class SegmentFactory:
 
         Returns:
             route_dict : dict<Route>
-                An dictionary of Routes that do not yet contain any Semgents themselves.
+                An dictionary of Routes that do not yet
+                contain any Semgents themselves.
         """
         route_dict = dict()
         for x in data_lines:  # Iterate through every line in the data
@@ -115,16 +116,19 @@ class SegmentFactory:
 
         Returns:
             new_segment : Segment
-                Either a reference to a Route in the dictionary or a new Description object.
+                Either a reference to a Route in the dictionary,
+                or a new Description object.
         """
         entry = data_line.split(",")
         entry[0] = float(entry[0])  # latitude
         entry[1] = float(entry[1])  # longitude
         entry[2] = float(entry[2])  # altitude
 
-        if len(entry) is 3:  # The data_line is the last one inside a given Route.
+        # The data_line is the last one inside a given Route.
+        if len(entry) is 3:
             new_segment = Description(entry[0], entry[1], entry[2])
-        elif entry[3][0] is '*':  # The data_line references an already created Route (sub-route).
+        # The data_line references an already created Route (sub-route).
+        elif entry[3][0] is '*':
             desc_attr = ''.join(entry[3:])
             desc_attr = desc_attr[1:]            # Remove * from route name
             new_segment = route_dict[desc_attr]  # Retrieve Route

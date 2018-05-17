@@ -1,8 +1,8 @@
 """
-This is the abstract class representing the observer called when the Directory is updated.
-This class is aggregated inside the Directory class as a set.
-The class is inherited from (i.e. its concrete implementation) inside the UI - in an inner nested class called
-DirUpdateObserverImpl.
+This is the abstract class representing the observer called when
+the Directory is updated. This class is aggregated inside the Directory class
+as a set. The class is inherited from (i.e. its concrete implementation)
+inside the UI - in an inner nested class called DirUpdateObserverImpl.
 """
 
 # Author: Callum France

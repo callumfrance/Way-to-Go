@@ -1,3 +1,14 @@
+"""
+Data
+
+Contains data the GeoUtils stub imports into the Directory.
+Also contains the data that the stub GpsLocator uses to get
+fake location updates from.
+"""
+
+# Author: Callum France
+
+# GeoUtils uses this data for retrieveRouteData()
 test1 = "theClimb [description]\n \
 \t-31.94,115.75,47.1,[description]\n \
 \t-31.94,115.75,55.3,[description]\n \
@@ -19,6 +30,7 @@ theStroll [description]\n \
 \t-31.94,115.75,47.1"
 
 
+# Simulates walking along theStroll in GpsLocator stub
 theStroll_location_updates = \
         "-31.95,115.77,44.8\n" \
         "-31.94932,115.76835,44.8\n" \
@@ -30,6 +42,7 @@ theStroll_location_updates = \
         "-31.93799,115.75201,46.82\n" \
         "-31.94,115.75,47.1"
 
+# Simulates walking along mainRoute in GpsLocator stub
 mainRoute_location_updates = \
         "-31.96,115.80,63.0\n" \
         "-31.9552,115.7945,60.0\n" \
@@ -55,6 +68,7 @@ mainRoute_location_updates = \
         "-31.93,115.75,131.9\n" \
         "-31.92,115.74,128.1"
 
+# Just outputs the data strings to the console for demonstration
 if __name__ == '__main__':
     print("-------------------------")
     print("test1 is:\n\n{}".format(test1))
