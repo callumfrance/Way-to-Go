@@ -23,3 +23,5 @@ Assumptions
 - That GpsLocator.py and GeoUtils.py will be placed in the root directory of the program (i.e. directly inside the Way-to-Go/ folder)
 - That GpsLocator.locationReceived() has the added parameter of 'self', since it is not a static method.
 - `GpsLocator.locationRecieved()` is not called `_location_received()` as you would expect a private method using PEP8, nor does is used name wrangling i.e. `__locationReceived()`
+
+![UML Diagram](/UML_Way-to-Go.jpg)
