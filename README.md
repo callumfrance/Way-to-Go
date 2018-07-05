@@ -3,6 +3,8 @@ Way-to-Go
 #### by Callum France
 2018
 
+For a detailed description of what this project does, please consult the
+`Assignment-Briefing.pdf` file.
 
 Running
 -------
